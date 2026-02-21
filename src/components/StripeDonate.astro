@@ -1,0 +1,239 @@
+---
+// Simple Stripe donation form for aBotSpot
+// Works with static mode (no SSR)
+---
+
+<div id="stripe-donate" class="bg-white p-6 rounded-lg shadow-lg">
+  <h3 class="font-bold text-2xl mb-4 flex items-center">
+    <span class="mr-3">💳</span>
+    Donate with Stripe
+  </h3>
+
+  <p class="text-gray-600 mb-6">
+    Secure credit card donations powered by Stripe. One-time or monthly — your choice.
+  </p>
+
+  <!-- Donation Amounts -->
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+    <!-- Preset Amounts -->
+    <button
+      data-amount="10"
+      class="stripe-amount border-2 border-gray-300 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+    >
+      $10
+    </button>
+
+    <button
+      data-amount="25"
+      class="stripe-amount border-2 border-gray-300 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+    >
+      $25
+    </button>
+
+    <button
+      data-amount="50"
+      class="stripe-amount border-2 border-gray-300 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+    >
+      $50
+    </button>
+
+    <button
+      data-amount="100"
+      class="stripe-amount border-2 border-gray-300 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+    >
+      $100
+    </button>
+
+    <button
+      data-amount="500"
+      class="stripe-amount border-2 border-gray-300 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+    >
+      $500
+    </button>
+
+    <button
+      data-amount="1000"
+      class="stripe-amount border-2 border-gray-300 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+    >
+      $1,000
+    </button>
+  </div>
+
+  <!-- Custom Amount -->
+  <div class="mb-6">
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      Or enter a custom amount (minimum $1)
+    </label>
+    <div class="flex gap-3">
+      <span class="text-2xl text-gray-600">$</span>
+      <input
+        type="number"
+        id="stripe-custom-amount"
+        min="1"
+        step="1"
+        class="flex-1 border-2 border-gray-300 rounded-lg p-3 text-lg"
+        placeholder="100"
+      />
+    </div>
+  </div>
+
+  <!-- Recurring Option -->
+  <div class="mb-6">
+    <label class="flex items-center space-x-3 cursor-pointer">
+      <input type="checkbox" id="stripe-recurring" class="w-5 h-5 text-blue-600" />
+      <span class="text-gray-700">Make this a monthly donation</span>
+    </label>
+  </div>
+
+  <!-- Donor Information -->
+  <div class="space-y-4 mb-6">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Name (for tax receipt)
+      </label>
+      <input
+        type="text"
+        id="stripe-donor-name"
+        class="w-full border-2 border-gray-300 rounded-lg p-3"
+        placeholder="Your name"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Email (for tax receipt)
+      </label>
+      <input
+        type="email"
+        id="stripe-donor-email"
+        class="w-full border-2 border-gray-300 rounded-lg p-3"
+        placeholder="your@email.com"
+      />
+    </div>
+  </div>
+
+  <!-- Donate Button -->
+  <button
+    id="stripe-donate-btn"
+    class="w-full bg-blue-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Donate with Credit Card
+  </button>
+
+  <!-- Status Message -->
+  <div id="stripe-status" class="hidden mt-4">
+    <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+      <p class="text-green-800 font-semibold">✅ Thank you! Check your email for a tax receipt.</p>
+    </div>
+  </div>
+
+  <!-- Info Note -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+    <p class="text-sm text-blue-800">
+      <strong>🔒 Secure:</strong> Powered by Stripe. Your payment information is handled directly by Stripe — we never see your card details.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Simple client-side Stripe integration
+  const stripeDonateSection = document.getElementById('stripe-donate');
+  const stripeDonateBtn = document.getElementById('stripe-donate-btn');
+
+  // Check if we're on the donate page
+  if (stripeDonateSection) {
+    stripeDonateBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      // Get selected or custom amount
+      const selectedAmount = document.querySelector('.stripe-amount.bg-blue-50, .stripe-amount.border-blue-500');
+      const customAmount = document.getElementById('stripe-custom-amount');
+      const amount = selectedAmount ? selectedAmount.dataset.amount : customAmount.value;
+
+      if (!amount || amount < 1) {
+        alert('Please select or enter a donation amount');
+        return;
+      }
+
+      // Get donor info
+      const donorName = document.getElementById('stripe-donor-name').value;
+      const donorEmail = document.getElementById('stripe-donor-email').value;
+
+      if (!donorEmail) {
+        alert('Please enter your email for the tax receipt');
+        return;
+      }
+
+      // Show loading state
+      stripeDonateBtn.disabled = true;
+      stripeDonateBtn.textContent = 'Processing...';
+
+      try {
+        // Create Stripe checkout session via API
+        const response = await fetch('/api/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: parseInt(amount),
+            recurring: document.getElementById('stripe-recurring').checked,
+            donorName,
+            donorEmail
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create checkout session');
+        }
+
+        const { url } = await response.json();
+
+        // Redirect to Stripe Checkout
+        window.location.href = url;
+      } catch (error) {
+        console.error('Stripe donation error:', error);
+        alert('There was an error processing your donation. Please try again.');
+        stripeDonateBtn.disabled = false;
+        stripeDonateBtn.textContent = 'Donate with Credit Card';
+      }
+    });
+
+    // Handle amount selection
+    const amountButtons = document.querySelectorAll('.stripe-amount');
+    const customAmountInput = document.getElementById('stripe-custom-amount');
+
+    amountButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Reset all buttons
+        amountButtons.forEach(b => {
+          b.classList.remove('bg-blue-50', 'border-blue-500');
+          b.classList.add('border-gray-300');
+        });
+        customAmountInput.value = '';
+
+        // Highlight selected button
+        btn.classList.remove('border-gray-300');
+        btn.classList.add('bg-blue-50', 'border-blue-500');
+      });
+    });
+
+    // Handle custom amount input
+    customAmountInput.addEventListener('input', () => {
+      // Clear button selections when typing custom amount
+      amountButtons.forEach(btn => {
+        btn.classList.remove('bg-blue-50', 'border-blue-500');
+        btn.classList.add('border-gray-300');
+      });
+    });
+
+    // Check for donation success
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+
+    if (success === 'true') {
+      const statusMessage = document.getElementById('stripe-status');
+      if (statusMessage) {
+        statusMessage.classList.remove('hidden');
+      }
+    }
+  }
+</script>
