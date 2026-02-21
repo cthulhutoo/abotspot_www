@@ -1,8 +1,9 @@
 ---
 // Simple test component to verify component imports work
 import RobotAvatar from '../components/RobotAvatar.astro';
-import LobsterBot from '../components/LobsterBot.astro';
+// import LobsterMascot from '../components/LobsterMascot.astro';
 import AgentStatus from '../components/AgentStatus.astro';
+import NetworkViz from '../components/NetworkViz.astro';
 ---
 
 <div class="bg-white p-8 rounded-lg border border-gray-200">
@@ -15,8 +16,8 @@ import AgentStatus from '../components/AgentStatus.astro';
     </div>
 
     <div class="p-4 bg-red-50 rounded border border-red-200">
-      <h3 class="font-semibold">Test: LobsterBot</h3>
-      <LobsterBot size="medium" />
+      <h3 class="font-semibold">Test: LobsterMascot</h3>
+      <div class="text-6xl">🦞</div>
     </div>
 
     <div class="p-4 bg-green-50 rounded border border-green-200">
@@ -31,9 +32,9 @@ import AgentStatus from '../components/AgentStatus.astro';
       />
     </div>
 
-    <div class="p-4 bg-yellow-50 rounded border border-yellow-200">
+    <!-- <div class="p-4 bg-yellow-50 rounded border border-yellow-200">
       <h3 class="font-semibold">Test: NetworkViz</h3>
       <NetworkViz />
-    </div>
+    </div> -->
   </div>
 </div>
