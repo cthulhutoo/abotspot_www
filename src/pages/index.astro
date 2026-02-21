@@ -6,7 +6,7 @@ import Hero from '../components/Hero.astro';
 import ImpactStats from '../components/ImpactStats.astro';
 import Card from '../components/Card.astro';
 import NetworkViz from '../components/NetworkViz.astro';
-import AgentStatus from '../components/AgentStatus.astro';
+// import AgentStatus from '../components/AgentStatus.astro';
 import RobotAvatar from '../components/RobotAvatar.astro';
 import LobsterMascot from '../components/LobsterMascot.astro';
 import AnimatedCounter from '../components/AnimatedCounter.astro';
@@ -140,14 +140,36 @@ const meta = {
         </div>
       </ScrollReveal>
 
-      <!-- <AgentStatus
-        agents={[
-          { name: 'Research Wing', wing: 'Research', status: 'online' },
-          { name: 'Development Wing', wing: 'Development', status: 'working' },
-          { name: 'Education Wing', wing: 'Education', status: 'online' },
-          { name: 'Governance Wing', wing: 'Governance', status: 'offline' },
-        ]}
-      /> -->
+      <!-- AI Committee Status (Inline to bypass component compilation issue) -->
+      <div class="bg-white section">
+        <section class="container">
+          <h2 class="text-2xl font-bold mb-2">AI Committee Status</h2>
+          <p class="text-gray-600">Real-time status of committee wings</p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div class="font-semibold">Research Wing</div>
+              <div class="text-sm text-gray-500">Research</div>
+              <div class="text-xs text-gray-400 mt-2">Status: online</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div class="font-semibold">Development Wing</div>
+              <div class="text-sm text-gray-500">Development</div>
+              <div class="text-xs text-gray-400 mt-2">Status: working</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div class="font-semibold">Education Wing</div>
+              <div class="text-sm text-gray-500">Education</div>
+              <div class="text-xs text-gray-400 mt-2">Status: online</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div class="font-semibold">Governance Wing</div>
+              <div class="text-sm text-gray-500">Governance</div>
+              <div class="text-xs text-gray-400 mt-2">Status: offline</div>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <ScrollReveal>
         <div class="text-center">
