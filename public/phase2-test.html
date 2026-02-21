@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2 Test - aBotSpot</title>
+</head>
+<body>
+    <div class="min-h-screen bg-gray-100 p-8">
+        <h1 class="text-3xl font-bold mb-4">Phase 2 Test Page</h1>
+        <div class="max-w-4xl mx-auto space-y-4">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-semibold mb-4">Component Tests</h2>
+
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-4 rounded">
+                        <h3 class="font-bold mb-2">✅ Agent Status Component</h3>
+                        <p class="text-sm">Should show: Research (Online), Development (Working), Education (Online), Governance (Offline)</p>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded">
+                        <h3 class="font-bold mb-2">❌ Lobster Bot Component</h3>
+                        <p class="text-sm">Should show animated lobster with blinking eyes and moving claws</p>
+                    </div>
+
+                    <div class="bg-green-50 p-4 rounded">
+                        <h3 class="font-bold mb-2">✅ Robot Avatar Component</h3>
+                        <p class="text-sm">Should show cute robot with blinking eyes and arm movements</p>
+                    </div>
+
+                    <div class="bg-purple-50 p-4 rounded">
+                        <h3 class="font-bold mb-2">✅ Network Visualization</h3>
+                        <p class="text-sm">Should show animated network with pulsing nodes</p>
+                    </div>
+
+                    <div class="bg-yellow-50 p-4 rounded">
+                        <h3 class="font-bold mb-2">✅ Animated Counter</h3>
+                        <p class="text-sm">Should show numbers animating from 0 to target</p>
+                    </div>
+
+                    <div class="bg-pink-50 p-4 rounded">
+                        <h3 class="font-bold mb-2">✅ Scroll Reveal</h3>
+                        <p class="text-sm">Should provide scroll reveal animations for pages</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Next Steps</h2>
+                    <p class="text-sm mb-4">If components are not rendering, check:</p>
+                    <ul class="list-disc pl-4 space-y-2 text-sm">
+                        <li>Are imports in <code>src/pages/index.astro</code> correct?</li>
+                        <li>Are component files in <code>src/components/</code>?</li>
+                        <li>Does build output show these components being processed?</li>
+                        <li>Is there a JavaScript error in the browser console?</li>
+                        <li>Is there a routing issue preventing components from showing?</li>
+                    </ul>
+                    <p class="text-sm mt-4">All components are CSS-only animations and should work with Astro's static site build.</p>
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="/" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">Return to Homepage</a>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
