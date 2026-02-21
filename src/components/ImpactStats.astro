@@ -11,12 +11,13 @@ interface Stat {
 
 interface Props {
   stats: Stat[];
+  className?: string;
 }
 
-const { stats } = Astro.props;
+const { stats, className = '' } = Astro.props;
 ---
 
-<section class="bg-white section">
+<section class={`bg-white section ${className}`}>
   <div class="container">
     <div class="text-center scroll-reveal">
       <h2 class="text-3xl font-bold mb-12">Our Impact</h2>
