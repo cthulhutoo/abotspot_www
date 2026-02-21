@@ -35,47 +35,58 @@ const sizePx = {
       </linearGradient>
     </defs>
 
-    <ellipse cx="50%" cy="25%" rx="30%" ry="25%" fill="url(#lobster-body)" />
-
-    <g class="animate-eyes">
-      <circle cx="38%" cy="22%" r="5%" fill="white" />
-      <circle cx="38%" cy="22%" r="2.5%" fill="#1a1a2e" class="animate-pupil" />
-
-      <circle cx="62%" cy="22%" r="5%" fill="white" />
-      <circle cx="62%" cy="22%" r="2.5%" fill="#1a1a2e" class="animate-pupil" />
-    </g>
-
     <g>
-      <line x1="40%" y1="5%" x2="35%" y2="12%" stroke="url(#claw-gradient)" stroke-width="3%" stroke-linecap="round" />
-      <circle cx="35%" cy="12%" r="4%" fill="#3b82f6" class="animate-blink" />
+      <ellipse cx="50%" cy="25%" rx="30%" ry="25%" fill="url(#lobster-body)" />
 
-      <line x1="60%" y1="5%" x2="65%" y2="12%" stroke="url(#claw-gradient)" stroke-width="3%" stroke-linecap="round" />
-      <circle cx="65%" cy="12%" r="4%" fill="#3b82f6" class="animate-blink" />
-    </g>
+      <g class="animate-eyes">
+        <circle cx="38%" cy="22%" r="5%" fill="white" />
+        <circle cx="38%" cy="22%" r="2.5%" fill="#1a1a2e" class="animate-pupil" />
 
-    <g class="animate-claw-left-1">
-      <path d="M25,50 L35,35 L40,35 L45,40 L50,35" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="15 50 50" dur="2s" repeatCount="indefinite" values="0 50 50; 15 50 50; 0 50 50" />
+        <circle cx="62%" cy="22%" r="5%" fill="white" />
+        <circle cx="62%" cy="22%" r="2.5%" fill="#1a1a2e" class="animate-pupil" />
       </g>
 
-    <g class="animate-claw-left-2">
-      <path d="M25,60 L30,50 L35,55 L40,50 L45,55" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="-10 50 50" dur="2.2s" repeatCount="indefinite" values="0 50 50; -10 50 50; 0 50 50" />
+      <g>
+        <line x1="40%" y1="5%" x2="35%" y2="12%" stroke="url(#claw-gradient)" stroke-width="3%" stroke-linecap="round" />
+        <circle cx="35%" cy="12%" r="4%" fill="#3b82f6" class="animate-blink" />
+
+        <line x1="60%" y1="5%" x2="65%" y2="12%" stroke="url(#claw-gradient)" stroke-width="3%" stroke-linecap="round" />
+        <circle cx="65%" cy="12%" r="4%" fill="#3b82f6" class="animate-blink" />
       </g>
 
-    <g class="animate-claw-right-1">
-      <path d="M75,50 L65,35 L60,35 L55,40 L50,35" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="-15 50 50" dur="2s" repeatCount="indefinite" values="0 50 50; -15 50 50; 0 50 50" />
+      <g class="animate-claw-left-1">
+        <path d="M25,50 L35,35 L40,35 L45,40 L50,35" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="0deg" to="15deg" dur="2s" repeatCount="indefinite" />
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="15deg" to="0deg" dur="2s" repeatCount="indefinite" />
+        </path>
       </g>
 
-    <g class="animate-claw-right-2">
-      <path d="M75,60 L70,50 L65,55 L60,50 L55,55" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="10 50 50" dur="2.2s" repeatCount="indefinite" values="0 50 50; 10 50 50; 0 50 50" />
+      <g class="animate-claw-left-2">
+        <path d="M25,60 L30,50 L35,55 L40,50 L45,55" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="0deg" to="-10deg" dur="2.2s" repeatCount="indefinite" />
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="-10deg" to="0deg" dur="2.2s" repeatCount="indefinite" />
+        </path>
       </g>
 
-    <g class="animate-tail">
-      <path d="M50,75 Q50,90 40,100" stroke="url(#lobster-body)" stroke-width="8%" fill="none" stroke-linecap="round">
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="5 50 50" dur="3s" repeatCount="indefinite" values="0 50 50; 5 50 50; 0 50 50" />
+      <g class="animate-claw-right-1">
+        <path d="M75,50 L65,35 L60,35 L55,40 L50,35" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="0deg" to="-15deg" dur="2s" repeatCount="indefinite" />
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="-15deg" to="0deg" dur="2s" repeatCount="indefinite" />
+        </path>
+      </g>
+
+      <g class="animate-claw-right-2">
+        <path d="M75,60 L70,50 L65,55 L60,50 L55,55" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="0deg" to="10deg" dur="2s" repeatCount="indefinite" />
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="10deg" to="0deg" dur="2s" repeatCount="indefinite" />
+        </path>
+      </g>
+
+      <g class="animate-tail">
+        <path d="M50,75 Q50,90 40,100" stroke="url(#lobster-body)" stroke-width="8%" fill="none" stroke-linecap="round">
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="0deg" to="5deg" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="transform" attributeType="XML" type="rotate" from="5deg" to="0deg" dur="3s" repeatCount="indefinite" />
+        </path>
       </g>
   </svg>
 </div>
@@ -124,21 +135,21 @@ const sizePx = {
 
   @keyframes lookAround {
     0%, 25%, 75%, 100% {
-      cx: "35%";
+      cx: 35%;
     }
     50% {
-      cx: "38%";
+      cx: 38%;
     }
   }
 
   @keyframes blinkLight {
     0%, 60%, 100% {
       opacity: 1;
-      r: "4%";
+      r: 4%;
     }
     30%, 90% {
       opacity: 0.4;
-      r: "3.5%";
+      r: 3.5%;
     }
   }
 

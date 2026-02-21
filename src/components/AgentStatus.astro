@@ -9,19 +9,13 @@ interface Agent {
   status: 'online' | 'working' | 'offline';
 }
 
-interface Props {
-  agents: Agent[];
-}
-
 const { agents } = Astro.props;
 ---
 
 <div class="bg-white section">
   <section class="container">
-    <div class="text-center mb-8">
-      <h2 class="text-2xl font-bold mb-2">AI Committee Status</h2>
-      <p class="text-gray-600">Real-time status of committee wings</p>
-    </div>
+    <h2 class="text-2xl font-bold mb-2">AI Committee Status</h2>
+    <p class="text-gray-600">Real-time status of committee wings</p>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       {agents.map((agent, index) => (

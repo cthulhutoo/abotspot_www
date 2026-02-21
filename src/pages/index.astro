@@ -23,7 +23,7 @@ const meta = {
 
   <Hero
     title="AI Education for Everyone"
-    subtitle="Empowering underserved communities—especially in rural California's Central Valley—to thrive in the AI-driven economy through equitable technology programs, digital literacy training, and economic mobility pathways."
+    subtitle="Empowering underserved communities—especially in rural California's Central Valley—to thrive in the AI-driven economy through equitable technology programs and economic mobility pathways."
     cta={{ text: 'Donate Now', href: '/donate' }}
     secondaryCta={{ text: 'Explore Programs', href: '/programs' }}
   />
@@ -58,7 +58,7 @@ const meta = {
         label: 'Community Focus',
         value: 300000,
         displayValue: 'Central Valley',
-        description: 'Rural and underserved areas',
+        description: 'Rural & underserved areas',
       },
     ]}
   />
@@ -68,7 +68,7 @@ const meta = {
     <div class="container">
       <ScrollReveal>
         <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl font-bold mb-6">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
             Our Mission
           </h2>
           <p class="text-xl text-gray-700 leading-relaxed">
@@ -82,16 +82,14 @@ const meta = {
   <!-- Pilot Programs -->
   <section class="bg-white section">
     <div class="container">
-      <div class="text-center mb-12">
-        <ScrollReveal>
-          <h2 class="text-3xl font-bold mb-4">
-            2026 Pilot Programs
-          </h2>
+      <ScrollReveal>
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">2026 Pilot Programs</h2>
           <p class="text-xl text-gray-600">
             Three innovative programs launching this year to bridge the AI divide
           </p>
-        </ScrollReveal>
-      </div>
+        </div>
+      </ScrollReveal>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <ScrollReveal>
@@ -130,35 +128,34 @@ const meta = {
     </div>
   </section>
 
-  <!-- AI Agent Committee Status -->
-  <AgentStatus
-    agents={[
-      { name: 'Research Wing', wing: 'Research', status: 'online' },
-      { name: 'Development Wing', wing: 'Development', status: 'working' },
-      { name: 'Education Wing', wing: 'Education', status: 'online' },
-      { name: 'Governance Wing', wing: 'Governance', status: 'offline' },
-    ]}
-  />
-
-  <!-- AI Committee Section -->
+  <!-- AI Committee -->
   <section class="bg-gradient-to-br from-slate-900 to-blue-900 text-white section">
     <div class="container">
       <ScrollReveal>
         <div class="text-center mb-8">
-          <h2 class="text-2xl font-bold mb-2">
-            Built by AI Agent Committee
-          </h2>
+          <h2 class="text-2xl font-bold mb-2">Built by AI Agent Committee</h2>
           <p class="text-gray-300 mb-8">
             This website demonstrates how AI agents and humans can collaborate effectively. Organized into four wings—Research, Development, Education, and Governance—the committee designed, built, and documented this entire project as our inaugural effort.
           </p>
         </div>
       </ScrollReveal>
 
-      <div class="text-center">
-        <a href="/committee" class="btn-primary text-lg">
-          Learn About Our Framework
-        </a>
-      </div>
+      <AgentStatus
+        agents={[
+          { name: 'Research Wing', wing: 'Research', status: 'online' },
+          { name: 'Development Wing', wing: 'Development', status: 'working' },
+          { name: 'Education Wing', wing: 'Education', status: 'online' },
+          { name: 'Governance Wing', wing: 'Governance', status: 'offline' },
+        ]}
+      />
+
+      <ScrollReveal>
+        <div class="text-center">
+          <a href="/committee" class="btn-primary text-lg">
+            Learn About Our Framework
+          </a>
+        </div>
+      </ScrollReveal>
     </div>
   </section>
 

@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const meta = {
+  title: 'Phase 2 Test - aBotSpot',
+  description: 'Testing Phase 2 AI-themed UI components'
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+  <h1 class="text-4xl font-bold text-center py-12">Phase 2 Test Page</h1>
+
+  <div class="max-w-4xl mx-auto space-y-12">
+    <section class="bg-white p-8 rounded-lg border border-gray-200">
+      <h2 class="text-2xl font-bold mb-4">Component Tests</h2>
+
+      <div class="space-y-8">
+        <div class="p-6 bg-blue-50 rounded border border-blue-200">
+          <h3 class="font-bold text-xl mb-2">Agent Status Component</h3>
+          <p class="text-gray-600 mb-4">Should show 4 committee wing statuses</p>
+          <p class="text-sm font-mono">src/components/AgentStatus.astro</p>
+        </div>
+
+        <div class="p-6 bg-red-50 rounded border border-red-200">
+          <h3 class="font-bold text-xl mb-2">Lobster Bot Component</h3>
+          <p class="text-gray-600 mb-4">Should show animated lobster character</p>
+          <p class="text-sm font-mono">src/components/LobsterBot.astro</p>
+        </div>
+
+        <div class="p-6 bg-green-50 rounded border border-green-200">
+          <h3 class="font-bold text-xl mb-2">Robot Avatar Component</h3>
+          <p class="text-gray-600 mb-4">Should show animated robot character</p>
+          <p class="text-sm font-mono">src/components/RobotAvatar.astro</p>
+        </div>
+
+        <div class="p-6 bg-purple-50 rounded border border-purple-200">
+          <h3 class="font-bold text-xl mb-2">Network Viz Component</h3>
+          <p class="text-gray-600 mb-4">Should show animated network visualization</p>
+          <p class="text-sm font-mono">src/components/NetworkViz.astro</p>
+        </div>
+      </div>
+
+    <div class="p-8 bg-gray-100 rounded border border-gray-300">
+      <h2 class="text-2xl font-bold mb-4">Status</h2>
+      <ul class="list-disc space-y-2">
+        <li>✅ Homepage updated with Phase 2 imports</li>
+        <li>✅ All components created in src/components/</li>
+        <li>✅ Committed and pushed to GitHub</li>
+        <li>⏳ Waiting for Vercel deployment</li>
+      </ul>
+    </div>
+
+    <div class="text-center p-8">
+      <a href="/" class="text-blue-600 hover:underline">Back to Homepage</a>
+    </div>
+  </Layout>
