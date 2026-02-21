@@ -10,6 +10,24 @@ interface Agent {
 }
 
 const { agents } = Astro.props;
+
+function getStatusColor(status: string): string {
+  if (status === 'online') return 'bg-green-400';
+  if (status === 'working') return 'bg-yellow-400';
+  return 'bg-gray-400';
+}
+
+function getStatusTextColor(status: string): string {
+  if (status === 'online') return 'text-green-400';
+  if (status === 'working') return 'text-yellow-400';
+  return 'text-gray-400';
+}
+
+function getStatusIndicator(status: string): string {
+  if (status === 'online') return '● Online';
+  if (status === 'working') return '● Working';
+  return '● Offline';
+}
 ---
 
 <div class="bg-white section">
@@ -21,7 +39,7 @@ const { agents } = Astro.props;
       {agents.map((agent, index) => (
         <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
           <div class="flex items-center gap-3 mb-3">
-            <div class={`w-3 h-3 rounded-full ${agent.status === 'online' ? 'bg-green-400' : agent.status === 'working' ? 'bg-yellow-400' : 'bg-gray-400'}`}>
+            <div class={`w-3 h-3 rounded-full ${getStatusColor(agent.status)}`}>
               {agent.status === 'online' && (
                 <div class="animate-pulse w-full h-full rounded-full bg-green-400"></div>
               )}
@@ -31,10 +49,8 @@ const { agents } = Astro.props;
               <div class="text-sm text-gray-500">{agent.wing}</div>
             </div>
           </div>
-          <div class={`text-xs font-medium ${agent.status === 'online' ? 'text-green-400' : agent.status === 'working' ? 'text-yellow-400' : 'text-gray-400'}`}>
-            {agent.status === 'online' && '● Online'}
-            {agent.status === 'working' && '● Working'}
-            {agent.status === 'offline' && '● Offline'}
+          <div class={`text-xs font-medium ${getStatusTextColor(agent.status)}`}>
+            {getStatusIndicator(agent.status)}
           </div>
         </div>
       ))}
