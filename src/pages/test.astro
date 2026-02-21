@@ -1,0 +1,36 @@
+---
+// Simple test component to verify component imports work
+---
+
+<div class="bg-white p-8 rounded-lg border border-gray-200">
+  <h2 class="text-2xl font-bold mb-4">Component Test</h2>
+
+  <div class="space-y-4">
+    <div class="p-4 bg-blue-50 rounded border border-blue-200">
+      <h3 class="font-semibold">Test: RobotAvatar</h3>
+      <RobotAvatar size="medium" />
+    </div>
+
+    <div class="p-4 bg-red-50 rounded border border-red-200">
+      <h3 class="font-semibold">Test: LobsterBot</h3>
+      <LobsterBot size="medium" />
+    </div>
+
+    <div class="p-4 bg-green-50 rounded border border-green-200">
+      <h3 class="font-semibold">Test: AgentStatus</h3>
+      <AgentStatus
+        agents={[
+          { name: 'Research Wing', wing: 'Research', status: 'online' },
+          { name: 'Development Wing', wing: 'Development', status: 'working' },
+          { name: 'Education Wing', wing: 'Education', status: 'online' },
+          { name: 'Governance Wing', wing: 'Governance', status: 'offline' }
+        ]}
+      />
+    </div>
+
+    <div class="p-4 bg-yellow-50 rounded border border-yellow-200">
+      <h3 class="font-semibold">Test: NetworkViz</h3>
+      <NetworkViz />
+    </div>
+  </div>
+</div>
