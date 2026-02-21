@@ -33,5 +33,35 @@
       "source": "/index.html",
       "destination": "/"
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/:page",
+      "destination": "/:page.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/donate",
+      "destination": "/donate.html"
+    },
+    {
+      "source": "/committee",
+      "destination": "/committee.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/programs",
+      "destination": "/programs.html"
+    },
+    {
+      "source": "/programs/:page",
+      "destination": "/programs/:page.html"
+    }
   ]
 }
