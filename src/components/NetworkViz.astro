@@ -1,0 +1,89 @@
+---
+// Simple network visualization component
+// Animated graph showing connected nodes
+---
+
+<div class="relative w-full h-48 opacity-30">
+  <svg viewBox="0 0 400 200" class="w-full h-full" preserveAspectRatio="xMidYMid">
+    <defs>
+      <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <circle cx="200" cy="100" r="12" fill="#3b82f6" class="animate-bob">
+      <animate attributeName="r" values="12;14;12" dur="3s" repeatCount="indefinite" />
+    </circle>
+
+    <g stroke="#3b82f6" stroke-width="1.5" fill="none" opacity="0.5">
+      <line x1="200" y1="100" x2="80" y2="50" class="animate-pulse-line" />
+      <line x1="200" y1="100" x2="320" y2="50" class="animate-pulse-line" />
+      <line x1="200" y1="100" x2="120" y2="150" class="animate-pulse-line" />
+      <line x1="200" y1="100" x2="280" y2="150" class="animate-pulse-line" />
+      <line x1="200" y1="100" x2="80" y2="150" class="animate-pulse-line" />
+      <line x1="200" y1="100" x2="320" y2="150" class="animate-pulse-line" />
+    </g>
+
+    <circle cx="80" cy="50" r="8" fill="#60a5fa" class="animate-bob">
+      <animate attributeName="r" values="8;9;8" dur="2.5s" repeatCount="indefinite" begin="0.2s" />
+    </circle>
+
+    <circle cx="320" cy="50" r="8" fill="#60a5fa" class="animate-bob">
+      <animate attributeName="r" values="8;9;8" dur="2.5s" repeatCount="indefinite" begin="0.4s" />
+    </circle>
+
+    <circle cx="120" cy="150" r="6" fill="#f59e0b" class="animate-bob">
+      <animate attributeName="r" values="6;7;6" dur="2s" repeatCount="indefinite" begin="0.6s" />
+    </circle>
+
+    <circle cx="280" cy="150" r="6" fill="#f59e0b" class="animate-bob">
+      <animate attributeName="r" values="6;7;6" dur="2s" repeatCount="indefinite" begin="0.8s" />
+    </circle>
+
+    <circle cx="80" cy="150" r="5" fill="#10b981" class="animate-bob">
+      <animate attributeName="r" values="5;6;5" dur="1.8s" repeatCount="indefinite" begin="1s" />
+    </circle>
+
+    <circle cx="320" cy="150" r="5" fill="#10b981" class="animate-bob">
+      <animate attributeName="r" values="5;6;5" dur="1.8s" repeatCount="indefinite" begin="1.2s" />
+    </circle>
+  </svg>
+</div>
+
+<style>
+  .animate-bob {
+    animation: bob 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-line {
+    animation: pulseLine 3s ease-in-out infinite;
+  }
+
+  @keyframes bob {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes pulseLine {
+    0%, 100% {
+      opacity: 0.3;
+      stroke-width: 1.5;
+    }
+    50% {
+      opacity: 0.6;
+      stroke-width: 2.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bob,
+    .animate-pulse-line {
+      animation: none !important;
+    }
+  }
+</style>

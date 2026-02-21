@@ -1,0 +1,157 @@
+---
+// Lobster-themed AI assistant component
+// Playful animated lobster character
+---
+
+interface Props {
+  size?: 'small' | 'medium' | 'large';
+}
+
+const { size = 'medium' } = Astro.props;
+
+const sizeClasses = {
+  small: 'w-16 h-20',
+  medium: 'w-24 h-32',
+  large: 'w-32 h-48'
+};
+
+const sizePx = {
+  small: 64,
+  medium: 96,
+  large: 128
+};
+---
+
+<div class={'inline-flex items-center lobster-bot ' + sizeClasses[size]}>
+  <svg viewBox={'0 0 ' + sizePx[size] + ' ' + sizePx[size]} class="w-full h-full" preserveAspectRatio="xMidYMid">
+    <defs>
+      <linearGradient id="lobster-body" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ef4444" />
+        <stop offset="100%" stop-color="#b91c1c" />
+      </linearGradient>
+      <linearGradient id="claw-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ef4444" />
+        <stop offset="100%" stop-color="#f97316" />
+      </linearGradient>
+    </defs>
+
+    <ellipse cx="50%" cy="25%" rx="30%" ry="25%" fill="url(#lobster-body)" />
+
+    <g class="animate-eyes">
+      <circle cx="38%" cy="22%" r="5%" fill="white" />
+      <circle cx="38%" cy="22%" r="2.5%" fill="#1a1a2e" class="animate-pupil" />
+
+      <circle cx="62%" cy="22%" r="5%" fill="white" />
+      <circle cx="62%" cy="22%" r="2.5%" fill="#1a1a2e" class="animate-pupil" />
+    </g>
+
+    <g>
+      <line x1="40%" y1="5%" x2="35%" y2="12%" stroke="url(#claw-gradient)" stroke-width="3%" stroke-linecap="round" />
+      <circle cx="35%" cy="12%" r="4%" fill="#3b82f6" class="animate-blink" />
+
+      <line x1="60%" y1="5%" x2="65%" y2="12%" stroke="url(#claw-gradient)" stroke-width="3%" stroke-linecap="round" />
+      <circle cx="65%" cy="12%" r="4%" fill="#3b82f6" class="animate-blink" />
+    </g>
+
+    <g class="animate-claw-left-1">
+      <path d="M25,50 L35,35 L40,35 L45,40 L50,35" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="15 50 50" dur="2s" repeatCount="indefinite" values="0 50 50; 15 50 50; 0 50 50" />
+      </g>
+
+    <g class="animate-claw-left-2">
+      <path d="M25,60 L30,50 L35,55 L40,50 L45,55" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="-10 50 50" dur="2.2s" repeatCount="indefinite" values="0 50 50; -10 50 50; 0 50 50" />
+      </g>
+
+    <g class="animate-claw-right-1">
+      <path d="M75,50 L65,35 L60,35 L55,40 L50,35" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="-15 50 50" dur="2s" repeatCount="indefinite" values="0 50 50; -15 50 50; 0 50 50" />
+      </g>
+
+    <g class="animate-claw-right-2">
+      <path d="M75,60 L70,50 L65,55 L60,50 L55,55" stroke="url(#claw-gradient)" stroke-width="6%" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="10 50 50" dur="2.2s" repeatCount="indefinite" values="0 50 50; 10 50 50; 0 50 50" />
+      </g>
+
+    <g class="animate-tail">
+      <path d="M50,75 Q50,90 40,100" stroke="url(#lobster-body)" stroke-width="8%" fill="none" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="5 50 50" dur="3s" repeatCount="indefinite" values="0 50 50; 5 50 50; 0 50 50" />
+      </g>
+  </svg>
+</div>
+
+<style>
+  .animate-eyes {
+    animation: blink 4s ease-in-out infinite;
+  }
+
+  .animate-pupil {
+    animation: lookAround 8s ease-in-out infinite;
+  }
+
+  .animate-blink {
+    animation: blinkLight 2.5s ease-in-out infinite;
+  }
+
+  .animate-claw-left-1 {
+    transform-origin: 50% 50%;
+  }
+
+  .animate-claw-left-2 {
+    transform-origin: 50% 50%;
+  }
+
+  .animate-claw-right-1 {
+    transform-origin: 50% 50%;
+  }
+
+  .animate-claw-right-2 {
+    transform-origin: 50% 50%;
+  }
+
+  .animate-tail {
+    transform-origin: 50% 50%;
+  }
+
+  @keyframes blink {
+    0%, 45%, 55%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.1);
+    }
+  }
+
+  @keyframes lookAround {
+    0%, 25%, 75%, 100% {
+      cx: "35%";
+    }
+    50% {
+      cx: "38%";
+    }
+  }
+
+  @keyframes blinkLight {
+    0%, 60%, 100% {
+      opacity: 1;
+      r: "4%";
+    }
+    30%, 90% {
+      opacity: 0.4;
+      r: "3.5%";
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-eyes,
+    .animate-pupil,
+    .animate-blink,
+    .animate-claw-left-1,
+    .animate-claw-left-2,
+    .animate-claw-right-1,
+    .animate-claw-right-2,
+    .animate-tail {
+      animation: none !important;
+    }
+  }
+</style>

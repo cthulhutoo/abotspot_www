@@ -1,0 +1,132 @@
+---
+// Simple robot avatar component
+// Cute minimal robot character with simple animations
+---
+
+interface Props {
+  size?: 'small' | 'medium' | 'large';
+}
+
+const { size = 'medium' } = Astro.props;
+
+const sizeClasses = {
+  small: 'w-16 h-20',
+  medium: 'w-24 h-32',
+  large: 'w-32 h-48'
+};
+
+const sizePx = {
+  small: 64,
+  medium: 96,
+  large: 128
+};
+---
+
+<div class={`inline-flex items-center ${sizeClasses[size]} robot-avatar`}>
+  <svg viewBox={`0 0 ${sizePx[size]} ${sizePx[size]}`} class="w-full h-full" preserveAspectRatio="xMidYMid">
+    <rect x="20%" y="30%" width="60%" height="50%" rx="10%" fill="#3b82f6" class="animate-bob" />
+
+    <rect x="25%" y="10%" width="50%" height="25%" rx="15%" fill="#3b82f6" />
+
+    <g class="animate-eyes">
+      <circle cx="38%" cy="22%" r="5%" fill="white" />
+      <circle cx="38%" cy="22%" r="2.5%" fill="#1a1a2e" />
+
+      <circle cx="65%" cy="22%" r="5%" fill="white" />
+      <circle cx="65%" cy="22%" r="2.5%" fill="#1a1a2e" />
+    </g>
+
+    <g>
+      <line x1="40%" y1="10%" x2="40%" y2="5%" stroke="#3b82f6" stroke-width="3%" stroke-linecap="round" />
+      <circle cx="40%" cy="5%" r="4%" fill="#60a5fa" class="animate-blink" />
+
+      <line x1="60%" y1="10%" x2="60%" y2="5%" stroke="#3b82f6" stroke-width="3%" stroke-linecap="round" />
+      <circle cx="60%" cy="5%" r="4%" fill="#60a5fa" class="animate-blink" />
+    </g>
+
+    <rect x="10%" y="50%" width="15%" height="8%" rx="4%" fill="#60a5fa" class="animate-arm" />
+
+    <rect x="75%" y="50%" width="15%" height="8%" rx="4%" fill="#60a5fa" class="animate-arm" />
+
+    <circle cx="50%" cy="65%" r="5%" fill="#10b981" class="animate-pulse" />
+  </svg>
+</div>
+
+<style>
+  .animate-bob {
+    animation: bob 3s ease-in-out infinite;
+  }
+
+  .animate-eyes {
+    animation: blink 4s ease-in-out infinite;
+  }
+
+  .animate-blink {
+    animation: blinkLight 2.5s ease-in-out infinite;
+  }
+
+  .animate-arm {
+    animation: sway 2s ease-in-out infinite;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes bob {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes blink {
+    0%, 45%, 55%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.1);
+    }
+  }
+
+  @keyframes blinkLight {
+    0%, 60%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    30%, 90% {
+      opacity: 0.4;
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes sway {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bob,
+    .animate-eyes,
+    .animate-blink,
+    .animate-arm,
+    .animate-pulse {
+      animation: none !important;
+    }
+  }
+</style>
