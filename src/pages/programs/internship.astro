@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Hero from '../../components/Hero.astro';
+
+const meta = {
+  title: 'AI Agent Internship Program - aBotSpot',
+  description: 'A 12-week program training humans to work WITH AI agents. $50,000 funding goal for 20 participants.',
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+  <Header />
+
+  <Hero
+    title="AI Agent Internship Program"
+    subtitle="Train humans to work WITH AI agents, not be replaced by them. A 12-week program creating job-ready skills for AI-augmented work."
+    cta={{ text: 'Support This Program', href: '/donate' }}
+  />
+
+  <!-- Overview -->
+  <section class="bg-white section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6">Program Overview</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-blue-50 p-6 rounded-lg text-center">
+            <div class="text-3xl font-bold text-blue-500 mb-2">$50,000</div>
+            <div class="text-gray-600">Funding Goal</div>
+          </div>
+          <div class="bg-purple-50 p-6 rounded-lg text-center">
+            <div class="text-3xl font-bold text-purple-500 mb-2">20</div>
+            <div class="text-gray-600">Participants</div>
+          </div>
+          <div class="bg-green-50 p-6 rounded-lg text-center">
+            <div class="text-3xl font-bold text-green-500 mb-2">12</div>
+            <div class="text-gray-600">Weeks</div>
+          </div>
+        </div>
+
+        <p class="text-lg text-gray-700 mb-6">
+          This program addresses AI anxiety in the workforce and creates job-ready skills for AI-augmented work. Participants will learn to collaborate with AI agents effectively, turning potential displacement into opportunity.
+        </p>
+
+        <p class="text-lg text-gray-700">
+          Targeting students (high school, community college, university) and workers in transition from manufacturing, retail, and agriculture industries in Visalia and the Central Valley.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curriculum -->
+  <section class="bg-gray-50 section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8">12-Week Curriculum</h2>
+
+        <div class="space-y-6">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-xl mb-3 text-blue-500">Weeks 1-2: AI Fundamentals</h3>
+            <ul class="text-gray-600 space-y-1">
+              <li>• What are AI agents? Capabilities and limitations</li>
+              <li>• Agent-human collaboration patterns</li>
+              <li>• Ethics and responsible AI use</li>
+              <li>• Hands-on: Explore agent tools</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-xl mb-3 text-blue-500">Weeks 3-4: Working With Agents</h3>
+            <ul class="text-gray-600 space-y-1">
+              <li>• Prompt engineering and agent communication</li>
+              <li>• Agent workflow design</li>
+              <li>• Task decomposition for agent teams</li>
+              <li>• Hands-on: Build simple agent workflows</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-xl mb-3 text-blue-500">Weeks 5-8: Applied Projects</h3>
+            <ul class="text-gray-600 space-y-1">
+              <li>• Industry-sponsored projects (local businesses)</li>
+              <li>• Real-world agent integration challenges</li>
+              <li>• Team collaboration (humans + agents)</li>
+              <li>• Final project development</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-xl mb-3 text-blue-500">Weeks 9-12: Capstone & Career Preparation</h3>
+            <ul class="text-gray-600 space-y-1">
+              <li>• Final project presentation</li>
+              <li>• Resume building with AI skills</li>
+              <li>• Job interview preparation</li>
+              <li>• Industry networking event</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Budget Breakdown -->
+  <section class="bg-white section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8">Budget Breakdown: $50,000</h2>
+
+        <div class="space-y-4">
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Curriculum development</span>
+            <span class="font-semibold">$7,500</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Instructor stipends (2 instructors)</span>
+            <span class="font-semibold">$6,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Guest speakers (5 × $500)</span>
+            <span class="font-semibold">$2,500</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Student stipends (20 × $500)</span>
+            <span class="font-semibold">$10,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Materials and supplies</span>
+            <span class="font-semibold">$3,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Venue rental (12 weeks)</span>
+            <span class="font-semibold">$6,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Industry partnerships</span>
+            <span class="font-semibold">$5,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Marketing and outreach</span>
+            <span class="font-semibold">$3,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <span>Evaluation and reporting</span>
+            <span class="font-semibold">$3,000</span>
+          </div>
+          <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+            <span class="font-bold">Contingency (10%)</span>
+            <span class="font-bold text-blue-600">$4,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Metrics -->
+  <section class="bg-gradient-to-br from-slate-900 to-blue-900 text-white section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-8">Success Metrics</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-2">Completion</h3>
+            <p class="text-4xl font-bold text-cyan-400 mb-2">20</p>
+            <p class="text-gray-300">Participants complete program</p>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-2">Placement</h3>
+            <p class="text-4xl font-bold text-cyan-400 mb-2">80%</p>
+            <p class="text-gray-300">Job placement or continued education within 3 months</p>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-2">Confidence</h3>
+            <p class="text-4xl font-bold text-cyan-400 mb-2">90%</p>
+            <p class="text-gray-300">Report increased confidence in AI skills (pre/post survey)</p>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-2">Partnerships</h3>
+            <p class="text-4xl font-bold text-cyan-400 mb-2">10</p>
+            <p class="text-gray-300">Industry partnerships established</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="bg-white section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-8">2026 Timeline</h2>
+
+        <div class="space-y-6">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-32 font-bold text-blue-500">March-April</div>
+            <div>
+              <h3 class="font-semibold">Recruitment</h3>
+              <p class="text-gray-600">Outreach, applications, and selection of 20 participants</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-32 font-bold text-blue-500">May-July</div>
+            <div>
+              <h3 class="font-semibold">Program Delivery</h3>
+              <p class="text-gray-600">12-week intensive training program with industry projects</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-32 font-bold text-blue-500">August</div>
+            <div>
+              <h3 class="font-semibold">Evaluation</h3>
+              <p class="text-gray-600">Assess outcomes, gather feedback, and prepare impact report</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-32 font-bold text-blue-500">September</div>
+            <div>
+              <h3 class="font-semibold">Report & Planning</h3>
+              <p class="text-gray-600">Publish impact report, plan for next cohort</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

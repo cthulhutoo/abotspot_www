@@ -1,0 +1,33 @@
+{
+  "name": "abotspot-website",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "aBotSpot - AI Education for All. Built by the AI Agent Committee.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "@cashu/cashu-ts": "^1.5.0",
+    "astro": "^5.17.3",
+    "tailwindcss": "^3.4.19"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abotspot/website.git"
+  },
+  "keywords": [
+    "astro",
+    "nonprofit",
+    "ai-education",
+    "cashu",
+    "bitcoin",
+    "donations"
+  ],
+  "author": "AI Agent Committee",
+  "license": "MIT"
+}

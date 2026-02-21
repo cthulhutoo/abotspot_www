@@ -1,0 +1,86 @@
+---
+const currentPage = Astro.url.pathname;
+---
+
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="container">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-xl">aB</span>
+        </div>
+        <span class="font-bold text-xl text-slate-900">aBotSpot</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a
+          href="/about"
+          class="text-gray-600 hover:text-blue-500 transition-colors"
+          class:list={["font-medium", { "text-blue-500": currentPage.startsWith('/about') }]}
+        >
+          About
+        </a>
+        <a
+          href="/programs"
+          class="text-gray-600 hover:text-blue-500 transition-colors"
+          class:list={["font-medium", { "text-blue-500": currentPage.startsWith('/programs') }]}
+        >
+          Programs
+        </a>
+        <a
+          href="/committee"
+          class="text-gray-600 hover:text-blue-500 transition-colors"
+          class:list={["font-medium", { "text-blue-500": currentPage.startsWith('/committee') }]}
+        >
+          AI Committee
+        </a>
+        <a
+          href="/contact"
+          class="text-gray-600 hover:text-blue-500 transition-colors"
+          class:list={["font-medium", { "text-blue-500": currentPage === '/contact' }]}
+        >
+          Contact
+        </a>
+        <a
+          href="/donate"
+          class="btn-primary"
+        >
+          Donate
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-lg hover:bg-gray-100"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 bg-white">
+    <div class="container py-4 space-y-3">
+      <a href="/about" class="block py-2 text-gray-600 hover:text-blue-500">About</a>
+      <a href="/programs" class="block py-2 text-gray-600 hover:text-blue-500">Programs</a>
+      <a href="/committee" class="block py-2 text-gray-600 hover:text-blue-500">AI Committee</a>
+      <a href="/contact" class="block py-2 text-gray-600 hover:text-blue-500">Contact</a>
+      <a href="/donate" class="block py-2 btn-primary text-center">Donate</a>
+    </div>
+  </div>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+    });
+  </script>
+</header>

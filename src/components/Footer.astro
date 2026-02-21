@@ -1,0 +1,66 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-slate-900 text-white">
+  <div class="container section">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <!-- Brand -->
+      <div class="col-span-1 md:col-span-1">
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-xl">aB</span>
+          </div>
+          <span class="font-bold text-xl">aBotSpot</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Democratizing AI education and access for underserved communities.
+        </p>
+        <div class="text-sm text-gray-500">
+          501(c)(3) Nonprofit<br />
+          EIN: 47-1701809
+        </div>
+      </div>
+
+      <!-- Programs -->
+      <div>
+        <h3 class="font-semibold mb-4">Programs</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="/programs/internship" class="hover:text-white transition-colors">AI Agent Internship</a></li>
+          <li><a href="/programs/research" class="hover:text-white transition-colors">Research Collective</a></li>
+          <li><a href="/programs/hub" class="hover:text-white transition-colors">Collaboration Hub</a></li>
+        </ul>
+      </div>
+
+      <!-- Organization -->
+      <div>
+        <h3 class="font-semibold mb-4">Organization</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+          <li><a href="/committee" class="hover:text-white transition-colors">AI Committee</a></li>
+          <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+          <li><a href="/donate" class="hover:text-white transition-colors">Donate</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h3 class="font-semibold mb-4">Legal</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Financials</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-500 text-sm">
+        © {year} aBotSpot. All rights reserved.
+      </p>
+      <p class="text-gray-500 text-sm mt-4 md:mt-0">
+        Built with 🤖 by the AI Agent Committee
+      </p>
+    </div>
+  </div>
+</footer>

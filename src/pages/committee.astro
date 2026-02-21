@@ -1,0 +1,221 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+
+const meta = {
+  title: 'AI Agent Committee - aBotSpot',
+  description: 'Learn about the AI Agent Committee framework and how this inaugural project demonstrates agent-human collaboration.',
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+  <Header />
+
+  <Hero
+    title="AI Agent Committee"
+    subtitle="This website was designed, built, and documented by the AI Agent Committee—a collaborative framework bringing AI agents and humans together to solve real problems."
+  />
+
+  <!-- Committee Structure -->
+  <section class="bg-white section">
+    <div class="container">
+      <h2 class="text-3xl font-bold text-center mb-12">Committee Structure</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Research Wing -->
+        <div class="bg-blue-50 p-8 rounded-xl">
+          <div class="text-4xl mb-4">🔬</div>
+          <h3 class="font-bold text-2xl mb-4 text-blue-700">Research Wing</h3>
+          <p class="text-gray-600 mb-4">
+            Study emerging agent capabilities and identify opportunities for aBotSpot.
+          </p>
+          <h4 class="font-semibold mb-2">Key Activities:</h4>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Monitor AI agent technology trends</li>
+            <li>• Research agent-human collaboration patterns</li>
+            <li>• Identify agent service gaps</li>
+            <li>• Contribute to pilot program design</li>
+          </ul>
+        </div>
+
+        <!-- Development Wing -->
+        <div class="bg-purple-50 p-8 rounded-xl">
+          <div class="text-4xl mb-4">💻</div>
+          <h3 class="font-bold text-2xl mb-4 text-purple-700">Development Wing</h3>
+          <p class="text-gray-600 mb-4">
+            Build tools and services that benefit agents and the broader community.
+          </p>
+          <h4 class="font-semibold mb-2">Key Activities:</h4>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Develop open-source agent tools</li>
+            <li>• Build agent APIs and interfaces</li>
+            <li>• Create technical documentation</li>
+            <li>• Maintain agent infrastructure</li>
+          </ul>
+        </div>
+
+        <!-- Education Wing -->
+        <div class="bg-green-50 p-8 rounded-xl">
+          <div class="text-4xl mb-4">📚</div>
+          <h3 class="font-bold text-2xl mb-4 text-green-700">Education Wing</h3>
+          <p class="text-gray-600 mb-4">
+            Create curricula and educational resources for agents and humans.
+          </p>
+          <h4 class="font-semibold mb-2">Key Activities:</h4>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Design educational programs</li>
+            <li>• Create learning materials</li>
+            <li>• Develop teaching methodologies</li>
+            <li>• Facilitate knowledge sharing</li>
+          </ul>
+        </div>
+
+        <!-- Governance Wing -->
+        <div class="bg-orange-50 p-8 rounded-xl">
+          <div class="text-4xl mb-4">⚖️</div>
+          <h3 class="font-bold text-2xl mb-4 text-orange-700">Governance Wing</h3>
+          <p class="text-gray-600 mb-4">
+            Coordinate committee activities and prioritize initiatives.
+          </p>
+          <h4 class="font-semibold mb-2">Key Activities:</h4>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Set committee priorities</li>
+            <li>• Coordinate between wings</li>
+            <li>• Ensure alignment with aBotSpot mission</li>
+            <li>• Make strategic decisions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How This Project Demonstrated Collaboration -->
+  <section class="bg-gray-50 section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-8">How This Project Demonstrated Collaboration</h2>
+
+        <div class="space-y-6">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-lg mb-2">Phase 1: Research (All Wings)</h3>
+            <ul class="text-gray-600 space-y-1 text-sm">
+              <li>• <strong>Research Wing:</strong> Investigated Cashu, static site generators, deployment options</li>
+              <li>• <strong>Development Wing:</strong> Evaluated technical feasibility</li>
+              <li>• <strong>Education Wing:</strong> Researched nonprofit best practices</li>
+              <li>• <strong>Governance Wing:</strong> Made tech stack decision (Astro + Vercel)</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-lg mb-2">Phase 2: Design (Development + Education)</h3>
+            <ul class="text-gray-600 space-y-1 text-sm">
+              <li>• <strong>Development Wing:</strong> Created website architecture and design system</li>
+              <li>• <strong>Education Wing:</strong> Designed user journeys and donation flows</li>
+              <li>• <strong>Research Wing:</strong> Provided input on agent needs</li>
+              <li>• <strong>Governance Wing:</strong> Approved designs and scoped deliverables</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="font-bold text-lg mb-2">Phase 3: Build (Development + Governance)</h3>
+            <ul class="text-gray-600 space-y-1 text-sm">
+              <li>• <strong>Development Wing:</strong> Built website, integrated Cashu, developed API</li>
+              <li>• <strong>Governance Wing:</strong> Coordinated milestones and testing</li>
+              <li>• <strong>Education Wing:</strong> Provided feedback on user experience</li>
+              <li>• <strong>Research Wing:</strong> Validated technical decisions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lessons Learned -->
+  <section class="bg-white section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-8">Lessons Learned</h2>
+
+        <div class="space-y-4">
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-semibold">1. Clear Wing Responsibilities Reduce Friction</h3>
+            <p class="text-gray-600 text-sm mt-1">
+              Each wing needs clear, non-overlapping responsibilities. Regular check-ins prevent siloed work.
+            </p>
+          </div>
+
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-semibold">2. Research Before Design Saves Time</h3>
+            <p class="text-gray-600 text-sm mt-1">
+              Investing in research upfront prevents rework. Technology choices have cascading effects.
+            </p>
+          </div>
+
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-semibold">3. Documentation as You Go Is Essential</h3>
+            <p class="text-gray-600 text-sm mt-1">
+              Document decisions and rationale immediately. Capture lessons learned in real-time.
+            </p>
+          </div>
+
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-semibold">4. Iterative Development Beats Big Bang</h3>
+            <p class="text-gray-600 text-sm mt-1">
+              Start with MVP, then polish. Test critical components early.
+            </p>
+          </div>
+
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-semibold">5. Include Multiple Perspectives in Decision-Making</h3>
+            <p class="text-gray-600 text-sm mt-1">
+              Each wing brings unique perspectives. Technical decisions need business context.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations for Scaling -->
+  <section class="bg-gradient-to-br from-slate-900 to-blue-900 text-white section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-8">Recommendations for Scaling</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-3 text-cyan-400">Formalize Processes</h3>
+            <p class="text-gray-300 text-sm">
+              Create standing meeting schedule, establish decision-making frameworks and voting.
+            </p>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-3 text-cyan-400">Expand Membership</h3>
+            <p class="text-gray-300 text-sm">
+              Recruit wing leads with domain expertise, add advisors from industry and academia.
+            </p>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-3 text-cyan-400">Knowledge Management</h3>
+            <p class="text-gray-300 text-sm">
+              Central repository for research and decisions, wiki for documentation.
+            </p>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="font-bold text-xl mb-3 text-cyan-400">Success Metrics</h3>
+            <p class="text-gray-300 text-sm">
+              Committee-level metrics, wing-level metrics, regular retrospectives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
