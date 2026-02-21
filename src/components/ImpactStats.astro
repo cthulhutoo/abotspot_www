@@ -19,13 +19,13 @@ const { stats, className = '' } = Astro.props;
 
 <section class={`bg-white section ${className}`}>
   <div class="container">
-    <div class="text-center scroll-reveal">
+    <div class="text-center">
       <h2 class="text-3xl font-bold mb-12">Our Impact</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {stats.map((stat, index) => (
-        <div class="text-center scroll-reveal" data-delay={(index * 150).toString()}>
+        <div class="text-center">
           <div>
             {stat.displayValue ? (
               <div class="text-5xl font-bold text-blue-500 mb-2">
