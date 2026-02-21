@@ -3,28 +3,9 @@
 // Cute minimal robot character with simple animations
 ---
 
-interface Props {
-  size?: 'small' | 'medium' | 'large';
-}
-
-const { size = 'medium' } = Astro.props;
-
-const sizeClasses = {
-  small: 'w-16 h-20',
-  medium: 'w-24 h-32',
-  large: 'w-32 h-48'
-};
-
-const sizePx = {
-  small: 64,
-  medium: 96,
-  large: 128
-};
----
-
-<div class={`inline-flex items-center ${sizeClasses[size]} robot-avatar`}>
-  <svg viewBox={`0 0 ${sizePx[size]} ${sizePx[size]}`} class="w-full h-full" preserveAspectRatio="xMidYMid">
-    <rect x="20%" y="30%" width="60%" height="50%" rx="10%" fill="#3b82f6" class="animate-bob" />
+<div class="inline-flex items-center w-24 h-32 robot-avatar">
+  <svg viewBox="0 0 96 96" class="w-full h-full" preserveAspectRatio="xMidYMid">
+    <rect x="20%" y="30%" width="60%" height="50%" rx="10%" fill="#3b82f6" />
 
     <rect x="25%" y="10%" width="50%" height="25%" rx="15%" fill="#3b82f6" />
 

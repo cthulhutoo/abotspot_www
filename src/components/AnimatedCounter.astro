@@ -1,52 +1,60 @@
 ---
-// Animated counter component for aBotSpot
+// Animated counter component for donation tracking
 // Shows incremental donations with subtle animation
 ---
 
 <div
-  data-target={Astro.props.target || 0}
-  data-prefix={Astro.props.prefix || ''}
-  data-suffix={Astro.props.suffix || ''}
-  data-duration={Astro.props.duration || 2000}
+  data-target="225000"
+  data-prefix="$"
   class="animated-counter text-4xl md:text-5xl font-bold text-blue-600"
 >
-  {(Astro.props.target || 0).toLocaleString()}
+  $225,000
 </div>
 
 <style>
-  /* Respect user's motion preferences */
+  @keyframes countUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animated-counter {
+    animation: countUp 1s ease-out forwards;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .animated-counter {
       animation: none !important;
-      transition: none !important;
     }
   }
 </style>
 
-<script define:vars={{ target: Astro.props.target || 0, prefix: Astro.props.prefix || '', suffix: Astro.props.suffix || '', duration: Astro.props.duration || 2000 }}>
+<script>
   (function() {
     class AnimatedCounter extends HTMLElement {
       constructor() {
         super();
-        this.target = parseFloat(this.dataset.target);
-        this.prefix = this.dataset.prefix || '';
-        this.suffix = this.dataset.suffix || '';
-        this.duration = parseInt(this.dataset.duration) || 2000;
+        this.target = 225000;
         this.observer = null;
+        this.hasAnimated = false;
       }
 
       connectedCallback() {
-        this.textContent = this.prefix + '0' + this.suffix;
-
+        this.textContent = '$0';
         this.observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && !this.hasAnimated) {
               this.animateCounter();
+              this.hasAnimated = true;
               this.observer.unobserve(this);
             }
           });
         }, { threshold: 0.5 });
-
         this.observer.observe(this);
       }
 
@@ -57,18 +65,17 @@
       }
 
       animateCounter() {
+        const duration = 1500;
         const startTime = performance.now();
         const startValue = 0;
         const endValue = this.target;
 
         const animate = (currentTime) => {
           const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / this.duration, 1);
+          const progress = Math.min(elapsed / duration, 1);
           const easeOutExpo = 1 - Math.pow(2, -10 * progress);
-          const current = startValue + (endValue - startValue) * easeOutExpo;
-
-          this.textContent = this.prefix + Math.floor(current).toLocaleString() + this.suffix;
-
+          const current = Math.floor(startValue + (endValue - startValue) * easeOutExpo);
+          this.textContent = '$' + current.toLocaleString();
           if (progress < 1) {
             requestAnimationFrame(animate);
           }

@@ -5,10 +5,16 @@ import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
 import ImpactStats from '../components/ImpactStats.astro';
 import Card from '../components/Card.astro';
+import NetworkViz from '../components/NetworkViz.astro';
+import AgentStatus from '../components/AgentStatus.astro';
+import RobotAvatar from '../components/RobotAvatar.astro';
+import LobsterBot from '../components/LobsterBot.astro';
+import AnimatedCounter from '../components/AnimatedCounter.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 
 const meta = {
   title: 'aBotSpot - AI Education for All',
-  description: 'Democratizing AI education and access for underserved communities through AI literacy programs, workforce development, and agent-human collaboration.'
+  description: 'Democratizing AI education and access for underserved communities through AI literacy programs, workforce development, and agent-human collaboration. Features animated AI Committee status indicators and playful AI-themed characters.'
 };
 ---
 
@@ -17,11 +23,23 @@ const meta = {
 
   <Hero
     title="AI Education for Everyone"
-    subtitle="Empowering underserved communities—especially in rural California's Central Valley—to thrive in the AI-driven economy through equitable technology programs and economic mobility pathways."
+    subtitle="Empowering underserved communities—especially in rural California's Central Valley—to thrive in the AI-driven economy through equitable technology programs, digital literacy training, and economic mobility pathways."
     cta={{ text: 'Donate Now', href: '/donate' }}
     secondaryCta={{ text: 'Explore Programs', href: '/programs' }}
   />
 
+  <!-- Network Visualization with Robot and Lobster mascots -->
+  <div class="relative -mt-24">
+    <NetworkViz />
+    <div class="absolute top-4 right-8">
+      <RobotAvatar size="medium" />
+    </div>
+    <div class="absolute top-4 left-8">
+      <LobsterBot size="medium" />
+    </div>
+  </div>
+
+  <!-- Animated Impact Stats -->
   <ImpactStats
     stats={[
       {
@@ -40,55 +58,105 @@ const meta = {
         label: 'Community Focus',
         value: 300000,
         displayValue: 'Central Valley',
-        description: 'Rural & underserved areas',
+        description: 'Rural and underserved areas',
       },
     ]}
   />
 
+  <!-- Mission Statement -->
   <section class="bg-gray-50 section">
     <div class="container">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6">Our Mission</h2>
-        <p class="text-xl text-gray-700 leading-relaxed">
-          To democratize artificial intelligence education and access, empowering underserved communities—especially in rural California's Central Valley—to thrive in the AI-driven economy through equitable technology programs, digital literacy training, and economic mobility pathways.
-        </p>
+      <ScrollReveal>
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold mb-6">
+            Our Mission
+          </h2>
+          <p class="text-xl text-gray-700 leading-relaxed">
+            To democratize artificial intelligence education and access, empowering underserved communities—especially in rural California's Central Valley—to thrive in the AI-driven economy through equitable technology programs, digital literacy training, and economic mobility pathways.
+          </p>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- Pilot Programs -->
+  <section class="bg-white section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <ScrollReveal>
+          <h2 class="text-3xl font-bold mb-4">
+            2026 Pilot Programs
+          </h2>
+          <p class="text-xl text-gray-600">
+            Three innovative programs launching this year to bridge the AI divide
+          </p>
+        </ScrollReveal>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <ScrollReveal>
+          <Card
+            title="AI Agent Internship Program"
+            description="Train humans to work WITH AI agents, not be replaced by them. A 12-week program for students and workers in Visalia and Central Valley."
+            href="/programs/internship"
+            icon="🎓"
+          />
+        </ScrollReveal>
+        <ScrollReveal>
+          <Card
+            title="Agent Services Research Collective"
+            description="Committee-led research into what services agents need. Building open-source tools and publishing research to benefit of broader agent community."
+            href="/programs/research"
+            icon="🔬"
+          />
+        </ScrollReveal>
+        <ScrollReveal>
+          <Card
+            title="Agent-Human Collaboration Hub"
+            description="Physical and virtual space where AI agents and humans collaborate. A living laboratory for demonstrations, workshops, and protocol development."
+            href="/programs/hub"
+            icon="🤝"
+          />
+        </ScrollReveal>
+      </div>
+
+      <div class="text-center mt-12">
+        <ScrollReveal>
+          <a href="/programs" class="btn-outline">
+            View All Programs
+          </a>
+        </ScrollReveal>
       </div>
     </div>
   </section>
 
-  <section class="bg-white section">
+  <!-- AI Agent Committee Status -->
+  <AgentStatus
+    agents={[
+      { name: 'Research Wing', wing: 'Research', status: 'online' },
+      { name: 'Development Wing', wing: 'Development', status: 'working' },
+      { name: 'Education Wing', wing: 'Education', status: 'online' },
+      { name: 'Governance Wing', wing: 'Governance', status: 'offline' },
+    ]}
+  />
+
+  <!-- AI Committee Section -->
+  <section class="bg-gradient-to-br from-slate-900 to-blue-900 text-white section">
     <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4">2026 Pilot Programs</h2>
-        <p class="text-xl text-gray-600">
-          Three innovative programs launching this year to bridge the AI divide
-        </p>
-      </div>
+      <ScrollReveal>
+        <div class="text-center mb-8">
+          <h2 class="text-2xl font-bold mb-2">
+            Built by AI Agent Committee
+          </h2>
+          <p class="text-gray-300 mb-8">
+            This website demonstrates how AI agents and humans can collaborate effectively. Organized into four wings—Research, Development, Education, and Governance—the committee designed, built, and documented this entire project as our inaugural effort.
+          </p>
+        </div>
+      </ScrollReveal>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <Card
-          title="AI Agent Internship Program"
-          description="Train humans to work WITH AI agents, not be replaced by them. A 12-week program for students and workers in Visalia and Central Valley."
-          href="/programs/internship"
-          icon="🎓"
-        />
-        <Card
-          title="Agent Services Research Collective"
-          description="Committee-led research into what services agents need. Building open-source tools and publishing research to benefit the broader agent community."
-          href="/programs/research"
-          icon="🔬"
-        />
-        <Card
-          title="Agent-Human Collaboration Hub"
-          description="Physical and virtual space where AI agents and humans collaborate. A living laboratory for demonstrations, workshops, and protocol development."
-          href="/programs/hub"
-          icon="🤝"
-        />
-      </div>
-
-      <div class="text-center mt-12">
-        <a href="/programs" class="btn-outline">
-          View All Programs
+      <div class="text-center">
+        <a href="/committee" class="btn-primary text-lg">
+          Learn About Our Framework
         </a>
       </div>
     </div>
