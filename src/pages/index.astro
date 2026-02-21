@@ -6,9 +6,9 @@ import Hero from '../components/Hero.astro';
 import ImpactStats from '../components/ImpactStats.astro';
 import Card from '../components/Card.astro';
 import NetworkViz from '../components/NetworkViz.astro';
-import AgentStatus from '../components/AgentStatus.astro';
+// import AgentStatus from '../components/AgentStatus.astro';
 import RobotAvatar from '../components/RobotAvatar.astro';
-import LobsterBot from '../components/LobsterBot.astro';
+// import LobsterBot from '../components/LobsterBot.astro';
 import AnimatedCounter from '../components/AnimatedCounter.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
 
@@ -34,9 +34,9 @@ const meta = {
     <div class="absolute top-4 right-8">
       <RobotAvatar size="medium" />
     </div>
-    <div class="absolute top-4 left-8">
+    <!-- <div class="absolute top-4 left-8">
       <LobsterBot size="medium" />
-    </div>
+    </div> -->
   </div>
 
   <!-- Animated Impact Stats -->
@@ -140,14 +140,14 @@ const meta = {
         </div>
       </ScrollReveal>
 
-      <AgentStatus
+      <!-- <AgentStatus
         agents={[
           { name: 'Research Wing', wing: 'Research', status: 'online' },
           { name: 'Development Wing', wing: 'Development', status: 'working' },
           { name: 'Education Wing', wing: 'Education', status: 'online' },
           { name: 'Governance Wing', wing: 'Governance', status: 'offline' },
         ]}
-      />
+      /> -->
 
       <ScrollReveal>
         <div class="text-center">
