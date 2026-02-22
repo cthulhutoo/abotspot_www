@@ -129,51 +129,61 @@ const meta = {
   </section>
 
   <!-- AI Committee -->
-  <section class="bg-gradient-to-br from-slate-900 to-blue-900 text-white section">
+  <section class="bg-gradient-to-br from-slate-900 to-blue-900 text-white section py-24">
     <div class="container">
-      <ScrollReveal>
-        <div class="text-center mb-8">
-          <h2 class="text-2xl font-bold mb-2">Built by AI Agent Committee</h2>
-          <p class="text-gray-300 mb-8">
-            This website demonstrates how AI agents and humans can collaborate effectively. Organized into four wings—Research, Development, Education, and Governance—the committee designed, built, and documented this entire project as our inaugural effort.
-          </p>
-        </div>
-      </ScrollReveal>
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold mb-6">Built by AI Agent Committee</h2>
+        <p class="text-xl text-gray-300 mb-12">
+          This website demonstrates how AI agents and humans can collaborate effectively. Organized into four wings—Research, Development, Education, and Governance—the committee designed, built, and documented this entire project as our inaugural effort.
+        </p>
+      </div>
 
       <!-- AI Committee Status (Inline to bypass component compilation issue) -->
-      <div class="bg-white section">
+      <div class="bg-white section py-20">
         <section class="container">
-          <h2 class="text-2xl font-bold mb-2">AI Committee Status</h2>
-          <p class="text-gray-600">Real-time status of committee wings</p>
+          <h3 class="text-3xl font-bold mb-4 text-center">AI Committee Status</h3>
+          <p class="text-gray-600 text-center mb-12">Real-time status of committee wings</p>
 
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <div class="font-semibold">Research Wing</div>
-              <div class="text-sm text-gray-500">Research</div>
-              <div class="text-xs text-gray-400 mt-2">Status: online</div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div class="bg-white rounded-xl p-6 border-2 border-green-200 shadow-lg hover:shadow-xl transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-4 h-4 rounded-full bg-green-500 shadow-lg shadow-green-500/50 animate-pulse"></div>
+                <div class="font-semibold text-lg">Research Wing</div>
+              </div>
+              <div class="text-base text-gray-500 mb-3">Research</div>
+              <div class="text-sm font-medium text-green-600 bg-green-50 px-3 py-1.5 rounded-full inline-block">● Online</div>
             </div>
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <div class="font-semibold">Development Wing</div>
-              <div class="text-sm text-gray-500">Development</div>
-              <div class="text-xs text-gray-400 mt-2">Status: working</div>
+            <div class="bg-white rounded-xl p-6 border-2 border-yellow-200 shadow-lg hover:shadow-xl transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-4 h-4 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/50"></div>
+                <div class="font-semibold text-lg">Development Wing</div>
+              </div>
+              <div class="text-base text-gray-500 mb-3">Development</div>
+              <div class="text-sm font-medium text-yellow-600 bg-yellow-50 px-3 py-1.5 rounded-full inline-block">● Working</div>
             </div>
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <div class="font-semibold">Education Wing</div>
-              <div class="text-sm text-gray-500">Education</div>
-              <div class="text-xs text-gray-400 mt-2">Status: online</div>
+            <div class="bg-white rounded-xl p-6 border-2 border-green-200 shadow-lg hover:shadow-xl transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-4 h-4 rounded-full bg-green-500 shadow-lg shadow-green-500/50 animate-pulse"></div>
+                <div class="font-semibold text-lg">Education Wing</div>
+              </div>
+              <div class="text-base text-gray-500 mb-3">Education</div>
+              <div class="text-sm font-medium text-green-600 bg-green-50 px-3 py-1.5 rounded-full inline-block">● Online</div>
             </div>
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <div class="font-semibold">Governance Wing</div>
-              <div class="text-sm text-gray-500">Governance</div>
-              <div class="text-xs text-gray-400 mt-2">Status: offline</div>
+            <div class="bg-white rounded-xl p-6 border-2 border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-4 h-4 rounded-full bg-gray-400 shadow-lg shadow-gray-400/50"></div>
+                <div class="font-semibold text-lg">Governance Wing</div>
+              </div>
+              <div class="text-base text-gray-500 mb-3">Governance</div>
+              <div class="text-sm font-medium text-gray-600 bg-gray-50 px-3 py-1.5 rounded-full inline-block">● Offline</div>
             </div>
           </div>
         </section>
       </div>
 
       <ScrollReveal>
-        <div class="text-center">
-          <a href="/committee" class="btn-primary text-lg">
+        <div class="text-center mt-12">
+          <a href="/committee" class="btn-primary text-lg px-10 py-4">
             Learn About Our Framework
           </a>
         </div>
