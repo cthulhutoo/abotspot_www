@@ -28,17 +28,7 @@
       ]
     }
   ],
-  "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/"
-    }
-  ],
   "rewrites": [
-    {
-      "source": "/:page",
-      "destination": "/:page.html"
-    },
     {
       "source": "/about",
       "destination": "/about.html"
@@ -62,6 +52,10 @@
     {
       "source": "/programs/:page",
       "destination": "/programs/:page.html"
+    },
+    {
+      "source": "/board/:page",
+      "destination": "/board/:page.html"
     }
   ]
 }
