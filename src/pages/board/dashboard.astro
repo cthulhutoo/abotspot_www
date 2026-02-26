@@ -1,0 +1,68 @@
+---
+// Board Dashboard - Grant Management Overview
+
+import Layout from '../../layouts/Layout.astro'
+
+const pageTitle = 'Board Dashboard - aBotSpot'
+const pageDescription = 'Grant management dashboard for aBotSpot board members'
+
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Page Title -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Board Dashboard</h1>
+          <p class="text-gray-600 mt-2">Welcome to aBotSpot Grant Management Portal</p>
+      </div>
+
+      <!-- Coming Soon Placeholder -->
+      <div class="bg-white rounded-2xl shadow-lg p-12 text-center">
+        <div class="max-w-md mx-auto">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 0-6 6 12 12" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m-2 10h-3 10 3" />
+            </svg>
+          </div>
+          
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Grant Portal Coming Soon</h2>
+          
+          <div class="space-y-4">
+            <p class="text-gray-700">
+              The full grant management dashboard is being built and will be available soon.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+              <div class="bg-blue-50 rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-blue-900 mb-2">What's Coming</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                  <li>Grant discovery with smart filtering</li>
+                  <li>Kanban pipeline board</li>
+                  <li>Grant application tracking</li>
+                  <li>Funder intelligence database</li>
+                  <li>Deadline alerts and notifications</li>
+                </ul>
+              </div>
+              
+              <div class="bg-green-50 rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-green-900 mb-2">What's Ready</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                  <li>✅ Supabase database configured</li>
+                  <li>✅ Authentication system working</li>
+                  <li>✅ Board login page created</li>
+                  <li>✅ Route protection enabled</li>
+                </ul>
+              </div>
+            </div>
+            
+            <p class="text-sm text-gray-600 mt-8">
+              Thank you for your patience as we build out the complete grant management system.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
