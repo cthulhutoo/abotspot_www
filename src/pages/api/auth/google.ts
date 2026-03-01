@@ -1,7 +1,3 @@
----
-// Google OAuth Sign-In Handler
-// Redirects user to Google for authentication via Supabase
-
 import type { APIRoute } from 'astro'
 import { signInWithGoogle } from '../../../lib/auth'
 

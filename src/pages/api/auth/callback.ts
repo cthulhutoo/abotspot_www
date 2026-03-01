@@ -1,11 +1,7 @@
----
-// OAuth Callback Handler
-// Handles Supabase authentication callback from Google
-
 import type { APIRoute } from 'astro'
 import { supabase } from '../../../lib/supabase'
 
-export const GET: APIRoute = async ({ url, redirect, cookies }) => {
+export const GET: APIRoute = async ({ url, redirect }) => {
   // Get access token and refresh token from URL
   const code = url.searchParams.get('code')
   const error = url.searchParams.get('error')
