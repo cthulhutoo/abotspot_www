@@ -1,0 +1,311 @@
+---
+// Alerts & Notifications Page
+// Upcoming deadlines, reminders, and notifications for board members
+
+import Layout from '../../layouts/Layout.astro'
+
+const pageTitle = 'Alerts & Notifications - aBotSpot'
+const pageDescription = 'View upcoming deadlines and important notifications'
+
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Page Header -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Alerts & Notifications</h1>
+          <p class="text-gray-600 mt-2">Stay on top of deadlines and important updates</p>
+        </div>
+        <button class="px-6 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium">
+          Mark All Read
+        </button>
+      </div>
+
+      <!-- Alert Filters -->
+      <div class="flex flex-wrap gap-3 mb-8">
+        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">
+          All Alerts
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50">
+          Deadlines
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50">
+          Applications
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50">
+          Awards
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50">
+          System
+        </button>
+      </div>
+
+      <!-- Urgent Alerts Banner -->
+      <div class="bg-red-50 border-l-4 border-red-500 rounded-r-lg p-4 mb-6">
+        <div class="flex items-center gap-3">
+          <svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 2.502-3.237V9.416c0-1.571-1.082-2.966-2.502-3.237L13.938 4H3.062c-1.571 0-2.966 1.082-2.502 2.237V13.916c0 1.571 1.082 2.966 2.502 3.237L3.062 20H13.938c1.571 0 2.966-1.082 2.502-2.237V6.584c0-1.571-1.082-2.966-2.502-3.237l1.616-1.616" />
+          </svg>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-red-800">2 Urgent Deadlines This Week</h3>
+            <p class="text-sm text-red-600 mt-1">Two grant applications have deadlines within 7 days. Take action now.</p>
+          </div>
+          <button class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700">
+            View Details
+          </button>
+        </div>
+      </div>
+
+      <!-- Alert Feed -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Today's Alerts -->
+        <div class="border-b border-gray-200">
+          <div class="px-6 py-3 bg-gray-50">
+            <h3 class="text-sm font-bold text-gray-700">Today</h3>
+          </div>
+
+          <!-- Urgent Alert 1 -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">Deadline: Renewable Energy Research Grant</span>
+                <span class="px-2 py-0.5 bg-red-100 text-red-600 rounded text-xs font-medium">2 days</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">Grant application due March 10th. Research and final review required.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View Application</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              2:34 PM
+            </div>
+          </div>
+
+          <!-- Warning Alert -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">Pending Decision: Digital Literacy Program</span>
+                <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 rounded text-xs font-medium">5 days</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">Grant has been under review for 2 weeks. Follow up recommended.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">Contact Funder</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              10:15 AM
+            </div>
+          </div>
+        </div>
+
+        <!-- Yesterday's Alerts -->
+        <div class="border-b border-gray-200">
+          <div class="px-6 py-3 bg-gray-50">
+            <h3 class="text-sm font-bold text-gray-700">Yesterday</h3>
+          </div>
+
+          <!-- Success Alert -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">Grant Awarded: Community Garden Project</span>
+                <span class="px-2 py-0.5 bg-green-100 text-green-600 rounded text-xs font-medium">$25,000</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">Congratulations! Grant awarded from Chan Zuckerberg Initiative. Next steps: Finalize budget, begin procurement.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View Details</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              4:22 PM
+            </div>
+          </div>
+
+          <!-- Info Alert -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">New Funder Added: Amazon Community Impact</span>
+                <span class="px-2 py-0.5 bg-blue-100 text-blue-600 rounded text-xs font-medium">New</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">New funder added to database. Focus: Transportation Access. Previous giving: $0. Contact for initial outreach.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View Profile</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              11:30 AM
+            </div>
+          </div>
+        </div>
+
+        <!-- This Week -->
+        <div class="border-b border-gray-200">
+          <div class="px-6 py-3 bg-gray-50">
+            <h3 class="text-sm font-bold text-gray-700">This Week</h3>
+          </div>
+
+          <!-- Deadline Alert -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">Deadline: AI Workforce Training Grant</span>
+                <span class="px-2 py-0.5 bg-orange-100 text-orange-600 rounded text-xs font-medium">10 days</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">Grant application due March 20th. Finalizing budget and impact metrics.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View Application</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              Mon
+            </div>
+          </div>
+
+          <!-- System Alert -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">System Update: Pipeline Statistics Updated</span>
+                <span class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs font-medium">System</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">Quarterly success rate and win rate calculations have been refreshed with latest grant data.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View Analytics</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              Tue
+            </div>
+          </div>
+        </div>
+
+        <!-- Earlier This Month -->
+        <div>
+          <div class="px-6 py-3 bg-gray-50">
+            <h3 class="text-sm font-bold text-gray-700">Earlier This Month</h3>
+          </div>
+
+          <!-- Rejection Alert -->
+          <div class="flex items-start gap-4 px-6 py-4 hover:bg-gray-50 border-b border-gray-100">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-gray-900">Grant Declined: Transportation Access Initiative</span>
+                <span class="px-2 py-0.5 bg-red-100 text-red-600 rounded text-xs font-medium">$150K</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">Grant not funded due to budget scope exceeding limits. Reason provided by funder.</p>
+              <div class="flex gap-2">
+                <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View Decline Letter</button>
+                <button class="text-sm text-gray-500 hover:text-gray-700">Dismiss</button>
+              </div>
+            </div>
+            <div class="flex-shrink-0 text-sm text-gray-500">
+              Feb 28
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Deadlines Summary -->
+      <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Upcoming Deadlines Summary</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Urgent (Next 7 Days) -->
+          <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-base font-bold text-red-800">Urgent</h4>
+              <span class="text-2xl font-bold text-red-600">2</span>
+            </div>
+            <p class="text-sm text-red-700">Deadlines within 7 days</p>
+          </div>
+
+          <!-- Warning (Next 14 Days) -->
+          <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-base font-bold text-yellow-800">Warning</h4>
+              <span class="text-2xl font-bold text-yellow-600">3</span>
+            </div>
+            <p class="text-sm text-yellow-700">Deadlines within 14 days</p>
+          </div>
+
+          <!-- Upcoming (Next 30 Days) -->
+          <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-base font-bold text-blue-800">Upcoming</h4>
+              <span class="text-2xl font-bold text-blue-600">4</span>
+            </div>
+            <p class="text-sm text-blue-700">Deadlines within 30 days</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div class="mt-6 bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Notification Preferences</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="flex items-center justify-between py-2">
+            <div>
+              <span class="text-sm font-medium text-gray-900">Email Notifications</span>
+              <p class="text-xs text-gray-500">Receive alerts via email</p>
+            </div>
+            <input type="checkbox" checked class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+          </div>
+
+          <div class="flex items-center justify-between py-2">
+            <div>
+              <span class="text-sm font-medium text-gray-900">Deadline Reminders</span>
+              <p class="text-xs text-gray-500">Alerts 7 days before deadlines</p>
+            </div>
+            <input type="checkbox" checked class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+          </div>
+
+          <div class="flex items-center justify-between py-2">
+            <div>
+              <span class="text-sm font-medium text-gray-900">Grant Status Updates</span>
+              <p class="text-xs text-gray-500">Notifications when grant status changes</p>
+            </div>
+            <input type="checkbox" checked class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+          </div>
+
+          <div class="flex items-center justify-between py-2">
+            <div>
+              <span class="text-sm font-medium text-gray-900">New Funder Alerts</span>
+              <p class="text-xs text-gray-500">Alert when new funders are added</p>
+            </div>
+            <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

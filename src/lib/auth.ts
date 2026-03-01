@@ -3,8 +3,9 @@
 
 import type { APIRoute } from 'astro/api'
 import type { AstroGlobal } from 'astro'
+import { supabase } from './supabase'
 
-// Supabase client (will be imported dynamically to avoid build errors)
+// Supabase client type
 type SupabaseClient = {
   auth: {
     signIn: (options: any) => Promise<any>
@@ -19,24 +20,22 @@ type SupabaseClient = {
  * Get current session
  */
 export async function getSession() {
-  // This will be initialized when page loads
-  const { data: { session } } = await getSessionFromClient()
-  return { session, error: null }
+  const { data: { session }, error } = await supabase.auth.getSession()
+  return { session, error }
 }
 
 /**
  * Get current user
  */
 export async function getUser() {
-  const { data: { user } } = await getUserFromClient()
-  return { user, error: null }
+  const { data: { user }, error } = await supabase.auth.getUser()
+  return { user, error }
 }
 
 /**
  * Sign in with Google
  */
 export async function signInWithGoogle() {
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
@@ -54,7 +53,6 @@ export async function signInWithGoogle() {
  * Sign out
  */
 export async function signOut() {
-  const supabase = getSupabaseClient()
   const { error } = await supabase.auth.signOut()
   return { error }
 }
@@ -63,7 +61,6 @@ export async function signOut() {
  * Check if user is board member
  */
 export async function isBoardMember(userId: string): Promise<boolean> {
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('board_members')
     .select('id')
@@ -81,7 +78,6 @@ export async function isBoardMember(userId: string): Promise<boolean> {
  * Check if user is admin
  */
 export async function isAdmin(userId: string): Promise<boolean> {
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('board_members')
     .select('role')
@@ -99,7 +95,6 @@ export async function isAdmin(userId: string): Promise<boolean> {
  * Get board member profile
  */
 export async function getBoardMember(userId: string) {
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('board_members')
     .select(`
@@ -118,7 +113,6 @@ export async function getBoardMember(userId: string) {
  * Get all board members (admin only)
  */
 export async function getAllBoardMembers() {
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('board_members')
     .select(`
@@ -136,7 +130,6 @@ export async function getAllBoardMembers() {
  * Invite new board member (admin only)
  */
 export async function inviteBoardMember(email: string, name: string, role: 'admin' | 'chair' | 'member') {
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('board_members')
     .insert({
@@ -147,6 +140,7 @@ export async function inviteBoardMember(email: string, name: string, role: 'admi
     .single()
   
   // TODO: Send invitation email via SMTP
+  // Would integrate with imap-smtp-email skill to send invite
   
   return { data, error }
 }
@@ -162,23 +156,4 @@ export async function handleAuthCallback(userId: string, email: string) {
   const isAuthorized = await isBoardMember(userId)
   
   return isAuthorized
-}
-
-// Helper functions that will be implemented with actual Supabase client
-async function getSessionFromClient() {
-  // TODO: Implement with actual Supabase client
-  // For now, return null
-  return { session: null, error: null }
-}
-
-async function getUserFromClient() {
-  // TODO: Implement with actual Supabase client
-  // For now, return null
-  return { user: null, error: null }
-}
-
-function getSupabaseClient(): SupabaseClient {
-  // TODO: Initialize actual Supabase client
-  // For now, return a mock
-  return {} as any
 }

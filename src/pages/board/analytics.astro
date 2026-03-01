@@ -1,0 +1,454 @@
+---
+// Analytics & Reporting Page
+// Grant metrics, win rates, time-to-decision tracking, and visualizations
+
+import Layout from '../../layouts/Layout.astro'
+
+const pageTitle = 'Analytics & Reporting - aBotSpot'
+const pageDescription = 'Track grant performance metrics and analytics'
+
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Page Header -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Analytics & Reporting</h1>
+          <p class="text-gray-600 mt-2">Track grant performance metrics and analyze success patterns</p>
+        </div>
+        <div class="flex gap-3">
+          <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium">
+            Last 30 Days
+          </button>
+          <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium">
+            Export Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Key Metrics Overview -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Applications Submitted -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-medium text-gray-600 uppercase tracking-wider">Applications</h3>
+            <span class="text-green-500 text-sm">+12% vs last period</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900">24</p>
+          <p class="text-sm text-gray-500">This quarter</p>
+        </div>
+
+        <!-- Success Rate -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-medium text-gray-600 uppercase tracking-wider">Success Rate</h3>
+            <span class="text-green-500 text-sm">+5% vs last period</span>
+          </div>
+          <p class="text-3xl font-bold text-green-600">33%</p>
+          <p class="text-sm text-gray-500">8 of 24 applications funded</p>
+        </div>
+
+        <!-- Total Funding -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-medium text-gray-600 uppercase tracking-wider">Total Funding</h3>
+            <span class="text-green-500 text-sm">$285K secured</span>
+          </div>
+          <p class="text-3xl font-bold text-blue-600">$865,000</p>
+          <p class="text-sm text-gray-500">$580K goal remaining</p>
+        </div>
+
+        <!-- Average Award -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-medium text-gray-600 uppercase tracking-wider">Avg Award</h3>
+            <span class="text-gray-400 text-sm">This quarter</span>
+          </div>
+          <p class="text-3xl font-bold text-purple-600">$35,625</p>
+          <p class="text-sm text-gray-500">8 grants awarded, avg $35.6K</p>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Success Rate Over Time -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Success Rate Over Time</h3>
+          <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2v6a2 2 0 002-2H9zm-9-3V9a3 3 0 013 3h3a3 3 0 013 3v7h6m-9-4V5a3 3 0 013-3h3a3 3 0 013 3v3m0 0h6" />
+              </svg>
+              <p class="text-sm text-gray-600">Chart visualization will be rendered here</p>
+              <p class="text-xs text-gray-400">Success rate by month</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Applications by Status -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Applications by Status</h3>
+          <div class="space-y-4">
+            <!-- Bar: Submitted -->
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-600">Submitted</span>
+                <span class="font-medium text-gray-900">12</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-gray-400 h-2 rounded-full" style="width: 50%"></div>
+              </div>
+            </div>
+            
+            <!-- Bar: Under Review -->
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-600">Under Review</span>
+                <span class="font-medium text-gray-900">8</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 33%"></div>
+              </div>
+            </div>
+            
+            <!-- Bar: Awarded -->
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-600">Awarded</span>
+                <span class="font-medium text-green-600">8</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: 33%"></div>
+              </div>
+            </div>
+            
+            <!-- Bar: Rejected -->
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-600">Rejected</span>
+                <span class="font-medium text-red-600">4</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-red-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Metrics Tables -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Win Rate by Funder -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Win Rate by Funder</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="text-left text-xs text-gray-500 uppercase tracking-wider">
+                  <th class="pb-2">Funder</th>
+                  <th class="pb-2">Applications</th>
+                  <th class="pb-2">Awards</th>
+                  <th class="pb-2">Win Rate</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 text-sm">
+                <tr class="hover:bg-gray-50">
+                  <td class="py-2">Chan Zuckerberg Initiative</td>
+                  <td class="py-2">6</td>
+                  <td class="py-2 font-medium text-green-600">2</td>
+                  <td class="py-2 font-bold text-green-600">33%</td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-2">Ford Foundation</td>
+                  <td class="py-2">5</td>
+                  <td class="py-2 font-medium text-green-600">3</td>
+                  <td class="py-2 font-bold text-green-600">60%</td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-2">Gates Foundation</td>
+                  <td class="py-2">4</td>
+                  <td class="py-2 font-medium text-green-600">2</td>
+                  <td class="py-2 font-bold text-green-600">50%</td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-2">Google.org</td>
+                  <td class="py-2">3</td>
+                  <td class="py-2 font-medium text-green-600">1</td>
+                  <td class="py-2 font-bold text-orange-600">33%</td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-2">Amazon Community Impact</td>
+                  <td class="py-2">2</td>
+                  <td class="py-2 font-medium text-green-600">0</td>
+                  <td class="py-2 font-bold text-red-600">0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Time to Decision -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Time to Decision</h3>
+          <div class="space-y-4">
+            <!-- Metric 1 -->
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <span class="text-sm text-gray-600">Average Response Time</span>
+              <span class="font-medium text-gray-900">18 days</span>
+            </div>
+            
+            <!-- Metric 2 -->
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <span class="text-sm text-gray-600">Time to Award Decision</span>
+              <span class="font-medium text-gray-900">67 days</span>
+            </div>
+            
+            <!-- Metric 3 -->
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <span class="text-sm text-gray-600">Fastest Decision</span>
+              <span class="font-medium text-green-600">34 days</span>
+            </div>
+            
+            <!-- Metric 4 -->
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <span class="text-sm text-gray-600">Slowest Decision</span>
+              <span class="font-medium text-red-600">124 days</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Year-Over-Year Comparison -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Year-Over-Year Comparison</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="text-left text-xs text-gray-500 uppercase tracking-wider">
+                <th class="pb-2">Metric</th>
+                <th class="pb-2">2023</th>
+                <th class="pb-2">2024</th>
+                <th class="pb-2">2025 (YTD)</th>
+                <th class="pb-2 text-green-600">Growth</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-sm">
+              <tr class="hover:bg-gray-50">
+                <td class="py-2">Applications</td>
+                <td class="py-2">18</td>
+                <td class="py-2">32</td>
+                <td class="py-2 font-medium text-blue-600">24</td>
+                <td class="py-2 text-green-600">+33%</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="py-2">Success Rate</td>
+                <td class="py-2">28%</td>
+                <td class="py-2">31%</td>
+                <td class="py-2 font-medium text-green-600">33%</td>
+                <td class="py-2 text-green-600">+5%</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="py-2">Avg Award</td>
+                <td class="py-2">$22,000</td>
+                <td class="py-2">$28,500</td>
+                <td class="py-2 font-medium text-green-600">$35,625</td>
+                <td class="py-2 text-green-600">+25%</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="py-2">Total Funding</td>
+                <td class="py-2">$504K</td>
+                <td class="py-2">$912K</td>
+                <td class="py-2 font-medium text-green-600">$865K</td>
+                <td class="py-2 text-green-600">-5%</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="py-2">Awards</td>
+                <td class="py-2">5</td>
+                <td class="py-2">10</td>
+                <td class="py-2 font-medium text-blue-600">8</td>
+                <td class="py-2 text-green-600">+60%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Focus Area Performance -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Performance by Focus Area</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <!-- AI Education -->
+          <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-900 mb-2">AI Education</h4>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Apps</span>
+                <span class="font-medium">8</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Awards</span>
+                <span class="font-medium text-green-600">4</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Rate</span>
+                <span class="font-bold text-green-600">50%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Community Development -->
+          <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-900 mb-2">Community Dev</h4>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Apps</span>
+                <span class="font-medium">10</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Awards</span>
+                <span class="font-medium text-green-600">6</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Rate</span>
+                <span class="font-bold text-green-600">60%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Local Resilience -->
+          <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-900 mb-2">Local Resilience</h4>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Apps</span>
+                <span class="font-medium">4</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Awards</span>
+                <span class="font-medium text-green-600">2</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Rate</span>
+                <span class="font-bold text-orange-600">50%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Technology -->
+          <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-900 mb-2">Technology</h4>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Apps</span>
+                <span class="font-medium">2</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Awards</span>
+                <span class="font-medium text-green-600">1</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Rate</span>
+                <span class="font-bold text-orange-600">50%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Environment -->
+          <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-900 mb-2">Environment</h4>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Apps</span>
+                <span class="font-medium">0</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Awards</span>
+                <span class="font-medium text-green-600">0</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Rate</span>
+                <span class="font-bold text-red-600">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Arts & Culture -->
+          <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-900 mb-2">Arts & Culture</h4>
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Apps</span>
+                <span class="font-medium">0</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Awards</span>
+                <span class="font-medium text-green-600">0</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500">Rate</span>
+                <span class="font-bold text-red-600">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Recent Activity</h3>
+        <div class="space-y-3">
+          <!-- Activity Item 1 -->
+          <div class="flex items-start gap-3 pb-3 border-b border-gray-100">
+            <div class="flex-shrink-0 w-2 h-2 mt-2 bg-green-500 rounded-full"></div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-900">New grant awarded: <strong>Community Garden Project</strong> ($25,000)</p>
+              <p class="text-xs text-gray-500">Chan Zuckerberg Initiative • 2 hours ago</p>
+            </div>
+          </div>
+
+          <!-- Activity Item 2 -->
+          <div class="flex items-start gap-3 pb-3 border-b border-gray-100">
+            <div class="flex-shrink-0 w-2 h-2 mt-2 bg-blue-500 rounded-full"></div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-900">Grant application submitted: <strong>Digital Literacy Program</strong> ($50K)</p>
+              <p class="text-xs text-gray-500">Ford Foundation • 1 day ago</p>
+            </div>
+          </div>
+
+          <!-- Activity Item 3 -->
+          <div class="flex items-start gap-3 pb-3 border-b border-gray-100">
+            <div class="flex-shrink-0 w-2 h-2 mt-2 bg-yellow-500 rounded-full"></div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-900">Grant status updated: <strong>Youth Mental Health Initiative</strong> → Under Review</p>
+              <p class="text-xs text-gray-500">Gates Foundation • 2 days ago</p>
+            </div>
+          </div>
+
+          <!-- Activity Item 4 -->
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-2 h-2 mt-2 bg-red-500 rounded-full"></div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-900">Grant declined: <strong>Transportation Access Initiative</strong></p>
+              <p class="text-xs text-gray-500">Amazon Community Impact • 3 days ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex gap-4">
+        <button class="flex-1 px-6 py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-700 font-medium">
+          Download Full Report
+        </button>
+        <button class="flex-1 px-6 py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-700 font-medium">
+          Schedule Board Meeting
+        </button>
+        <button class="flex-1 px-6 py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-700 font-medium">
+          Export to CSV
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>

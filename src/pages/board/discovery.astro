@@ -1,0 +1,160 @@
+---
+// Grant Discovery Page
+// Search and filter grants from Supabase database
+
+import Layout from '../../layouts/Layout.astro'
+
+const pageTitle = 'Grant Discovery - aBotSpot'
+const pageDescription = 'Search and discover grants for aBotSpot projects'
+
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Grant Discovery</h1>
+        <p class="text-gray-600 mt-2">Search and filter grants for aBotSpot projects</p>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <div class="flex flex-col lg:flex-row gap-4">
+          <!-- Search Input -->
+          <div class="flex-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+            <input
+              type="text"
+              placeholder="Search by name, keywords, or description..."
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              id="searchInput"
+            />
+          </div>
+
+          <!-- Focus Area Filter -->
+          <div class="lg:w-64">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Focus Area</label>
+            <select
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              id="focusFilter"
+            >
+              <option value="">All Areas</option>
+              <option value="AI Education">AI Education</option>
+              <option value="Community Development">Community Development</option>
+              <option value="Local Resilience">Local Resilience</option>
+              <option value="Technology">Technology</option>
+              <option value="Environment">Environment</option>
+            </select>
+          </div>
+
+          <!-- Amount Filter -->
+          <div class="lg:w-48">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+            <select
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              id="amountFilter"
+            >
+              <option value="">Any Amount</option>
+              <option value="0-10000">$0 - $10K</option>
+              <option value="10000-50000">$10K - $50K</option>
+              <option value="50000-100000">$50K - $100K</option>
+              <option value="100000+">$100K+</option>
+            </select>
+          </div>
+
+          <!-- Status Filter -->
+          <div class="lg:w-48">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+            <select
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              id="statusFilter"
+            >
+              <option value="">All Status</option>
+              <option value="discovery">Discovery</option>
+              <option value="researching">Researching</option>
+              <option value="writing">Writing</option>
+              <option value="submitted">Submitted</option>
+              <option value="awarded">Awarded</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+
+          <!-- Search Button -->
+          <div class="flex items-end">
+            <button
+              class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              onclick="searchGrants()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-900">Search Results</h2>
+          <div class="flex gap-2">
+            <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm">
+              Save Search
+            </button>
+            <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm">
+              Export Results
+            </button>
+          </div>
+        </div>
+
+        <!-- Grants Grid -->
+        <div id="grantsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Grant Cards will be loaded here -->
+          <div class="text-center py-12 col-span-full">
+            <div class="text-gray-400 mb-4">
+              <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5l7-7m0 0l-7 7m7-7l-7 7" />
+              </svg>
+            </div>
+            <p class="text-gray-600">Use the search filters above to discover grants</p>
+            <p class="text-sm text-gray-500 mt-2">Your search results will appear here</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="mt-8 flex gap-4">
+        <button class="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+          + Add New Grant
+        </button>
+        <button class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+          View Pipeline
+        </button>
+        <button class="flex-1 px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+          Funder Database
+        </button>
+      </div>
+    </div>
+
+    <!-- Client-side Script -->
+    <script>
+      async function searchGrants() {
+        const searchInput = document.getElementById('searchInput').value;
+        const focusFilter = document.getElementById('focusFilter').value;
+        const amountFilter = document.getElementById('amountFilter').value;
+        const statusFilter = document.getElementById('statusFilter').value;
+
+        // TODO: Call Supabase API to search grants
+        console.log('Searching grants:', {
+          search: searchInput,
+          focus: focusFilter,
+          amount: amountFilter,
+          status: statusFilter
+        });
+
+        // TODO: Load results into grantsGrid
+        const grantsGrid = document.getElementById('grantsGrid');
+        grantsGrid.innerHTML = '<p class="text-center py-12 text-gray-600">Loading...</p>';
+      }
+    </script>
+  </main>
+</Layout>
