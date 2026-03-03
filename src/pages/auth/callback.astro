@@ -24,27 +24,33 @@ if (error) {
     errorMessage = 'No authentication data received. Please try again.'
   } else {
     // Wait for Supabase to process hash and establish session
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise(resolve => setTimeout(resolve, 2000))
 
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
-    if (sessionError || !session) {
+    if (sessionError) {
+      errorMessage = `Session error: ${sessionError.message || JSON.stringify(sessionError)}`
+    } else if (!session) {
       errorMessage = 'Could not establish session. Please try again.'
     } else {
       // Check if user is authorized board member
-      const { data: boardMember } = await supabase
+      const { data: boardMember, error: memberError } = await supabase
         .from('board_members')
         .select('*')
         .eq('user_id', session.user.id)
         .single()
 
-      if (!boardMember) {
+      if (memberError) {
+        errorMessage = `Database error: ${memberError.message || JSON.stringify(memberError)}`
+      } else if (!boardMember) {
         // Auto-add anyone with @abotspot.com email as board member
         const email = session.user.email || ''
 
         if (email.endsWith('@abotspot.com')) {
           const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0]
+
+          console.log('Adding board member:', { userId: session.user.id, email, name })
 
           const { error: insertError } = await supabase
             .from('board_members')
@@ -55,9 +61,10 @@ if (error) {
             })
 
           if (insertError) {
-            errorMessage = `Could not add as board member: ${insertError.message}`
+            errorMessage = `Could not add as board member: ${insertError.message || JSON.stringify(insertError)}`
           } else {
             authorized = true
+            console.log('Board member added successfully')
           }
         } else {
           errorMessage = 'You are not authorized as a board member. @abotspot.com accounts only.'
@@ -65,6 +72,7 @@ if (error) {
         }
       } else {
         authorized = true
+        console.log('Existing board member found:', boardMember)
       }
     }
   }
@@ -87,6 +95,8 @@ if (error) {
         const authorized = {authorized ? 'true' : 'false'};
         const errorMessage = {errorMessage ? JSON.stringify(errorMessage) : 'null'};
 
+        console.log('Auth callback state:', { authorized, errorMessage });
+
         if (authorized) {
           // Success - redirect to dashboard
           window.location.href = '/board/dashboard';
@@ -101,6 +111,11 @@ if (error) {
       <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
         <div style="width: 48px; height: 48px; border: 4px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
         <p style="color: #1f2937; margin: 0;">Processing sign in...</p>
+        {errorMessage && (
+          <div style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem; max-width: 400px;">
+            <p style="color: #991b1b; margin: 0; font-size: 14px;">{errorMessage}</p>
+          </div>
+        )}
       </div>
     </div>
     <style>
