@@ -28,13 +28,40 @@ export const prerender = false
       </div>
     </div>
 
-    <!-- Supabase JS Client -->
+    <!-- Supabase JS Client - using v2 which has createClient -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
       (async function() {
-        const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
+        // Wait for Supabase to load
+        function waitForSupabase() {
+          return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+              if (window.supabase && window.supabase.createClient) {
+                clearInterval(checkInterval);
+                resolve(window.supabase);
+              }
+            }, 100);
+
+            // Timeout after 10 seconds
+            setTimeout(() => {
+              clearInterval(checkInterval);
+              resolve(null);
+            }, 10000);
+          });
+        }
+
+        const supabase = await waitForSupabase();
+
+        if (!supabase) {
+          document.getElementById('status-text').textContent = 'Error: Supabase failed to load';
+          document.getElementById('error-message').textContent = 'Please refresh the page and try again.';
+          document.getElementById('spinner').style.display = 'none';
+          document.getElementById('error-display').style.display = 'block';
+          return;
+        }
+
+        console.log('Supabase loaded successfully');
 
         // DOM elements
         const spinner = document.getElementById('spinner');
@@ -43,13 +70,12 @@ export const prerender = false
         const errorMessage = document.getElementById('error-message');
 
         // Helper functions
-        const showSpinner = () => {
-          if (spinner) spinner.style.display = 'block';
-          if (statusText) statusText.textContent = 'Processing sign in...';
-        };
-
         const hideSpinner = () => {
           if (spinner) spinner.style.display = 'none';
+        };
+
+        const showSpinner = () => {
+          if (spinner) spinner.style.display = 'block';
         };
 
         const showError = (msg) => {
@@ -77,9 +103,16 @@ export const prerender = false
         };
 
         try {
-          // Initialize Supabase client
+          // Configuration
+          const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
+          const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
+
           console.log('Initializing Supabase client...');
+
+          // Initialize Supabase client
           const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+          console.log('Supabase client initialized');
 
           // Check for error in URL
           const urlParams = new URLSearchParams(window.location.search);
@@ -89,7 +122,7 @@ export const prerender = false
 
           if (oauthError) {
             showError('Authentication error occurred. Please try again.');
-            redirectToLogin('OAuth error');
+            setTimeout(() => { redirectToLogin('OAuth error'); }, 3000);
             return;
           }
 
@@ -98,16 +131,15 @@ export const prerender = false
 
           if (!hasHash) {
             showError('No authentication data received. Please try again.');
-            redirectToLogin('No hash');
+            setTimeout(() => { redirectToLogin('No hash'); }, 3000);
             return;
           }
 
-          console.log('Hash detected, waiting for Supabase to process...');
-
           // Wait for Supabase to process hash and establish session
+          console.log('Hash detected, waiting for Supabase to process OAuth tokens...');
           showSpinner();
           statusText.textContent = 'Establishing session...';
-          await new Promise(resolve => setTimeout(resolve, 3000));
+          await new Promise(resolve => setTimeout(resolve, 2500));
 
           console.log('Checking session...');
 
@@ -115,14 +147,15 @@ export const prerender = false
           const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
 
           if (sessionError) {
-            showError('Session error: ' + JSON.stringify(sessionError));
-            redirectToLogin(JSON.stringify(sessionError));
+            const errorMsg = sessionError.message || JSON.stringify(sessionError);
+            showError('Session error: ' + errorMsg);
+            setTimeout(() => { redirectToLogin(errorMsg); }, 3000);
             return;
           }
 
           if (!session) {
             showError('Could not establish session. Session is null.');
-            redirectToLogin('No session');
+            setTimeout(() => { redirectToLogin('No session'); }, 3000);
             return;
           }
 
@@ -137,8 +170,9 @@ export const prerender = false
             .single();
 
           if (memberError) {
-            showError('Database error: ' + JSON.stringify(memberError));
-            redirectToLogin(JSON.stringify(memberError));
+            const errorMsg = memberError.message || JSON.stringify(memberError);
+            showError('Database error: ' + errorMsg);
+            setTimeout(() => { redirectToLogin(errorMsg); }, 3000);
             return;
           }
 
@@ -164,19 +198,17 @@ export const prerender = false
                 });
 
               if (insertError) {
-                showError('Could not add as board member: ' + JSON.stringify(insertError));
-                setTimeout(() => {
-                  window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(JSON.stringify(insertError));
-                }, 3000);
+                const errorMsg = insertError.message || JSON.stringify(insertError);
+                showError('Could not add as board member: ' + errorMsg);
+                setTimeout(() => { redirectToLogin(errorMsg); }, 3000);
               } else {
                 console.log('Board member added successfully');
                 redirectToDashboard();
               }
             } else {
               showError('You are not authorized as a board member. @abotspot.com accounts only.');
-              setTimeout(() => {
-                window.location.href = '/board/login?error=unauthorized';
-              }, 3000);
+              await supabaseClient.auth.signOut();
+              setTimeout(() => { redirectToLogin('Not authorized'); }, 3000);
             }
           } else {
             console.log('Existing board member found:', boardMember);
@@ -187,9 +219,7 @@ export const prerender = false
           hideSpinner();
           if (statusText) statusText.textContent = 'Unexpected error';
           showError('An unexpected error occurred: ' + error.message);
-          setTimeout(() => {
-            window.location.href = '/board/login?error=callback_error';
-          }, 3000);
+          setTimeout(() => { redirectToLogin('Unexpected'); }, 3000);
         }
       })();
     </script>
