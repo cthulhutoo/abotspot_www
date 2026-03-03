@@ -36,7 +36,22 @@ export const prerender = false
         const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
 
-        console.log('OAuth callback page loaded');
+        console.log('OAuth callback page loaded at:', new Date().toISOString());
+
+        // Prevent infinite loops
+        const isCallbackPage = window.location.href.includes('/auth/callback');
+        const isRunning = localStorage.getItem('auth_callback_running') === 'true';
+
+        if (isCallbackPage && isRunning) {
+          console.error('Preventing infinite loop - callback already running');
+          window.location.href = '/board/dashboard';
+          return;
+        }
+
+        // Mark as running
+        if (isCallbackPage) {
+          localStorage.setItem('auth_callback_running', 'true');
+        }
 
         // DOM elements
         const spinner = document.getElementById('spinner');
@@ -65,6 +80,7 @@ export const prerender = false
 
         const redirectToLogin = (message) => {
           console.log('Redirecting to login with error:', message);
+          localStorage.removeItem('auth_callback_running');
           setTimeout(() => {
             window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(message);
           }, 2000);
@@ -72,32 +88,33 @@ export const prerender = false
 
         const redirectToDashboard = () => {
           console.log('Redirecting to dashboard');
+          localStorage.removeItem('auth_callback_running');
           setTimeout(() => {
             window.location.href = '/board/dashboard';
           }, 500);
         };
 
-        // Wait for Supabase to load - up to 30 seconds
-        function waitForSupabase() {
-          return new Promise((resolve) => {
-            const startTime = Date.now();
-            const timeout = 30000; // 30 seconds
-
-            const checkInterval = setInterval(() => {
-              if (window.supabase && window.supabase.createClient) {
-                clearInterval(checkInterval);
-                resolve(window.supabase);
-              }
-
-              if (Date.now() - startTime > timeout) {
-                clearInterval(checkInterval);
-                resolve(null);
-              }
-            }, 100);
-          });
-        }
-
         try {
+          // Wait for Supabase to load - up to 30 seconds
+          function waitForSupabase() {
+            return new Promise((resolve) => {
+              const startTime = Date.now();
+              const timeout = 30000; // 30 seconds
+
+              const checkInterval = setInterval(() => {
+                if (window.supabase && window.supabase.createClient) {
+                  clearInterval(checkInterval);
+                  resolve(window.supabase);
+                }
+
+                if (Date.now() - startTime > timeout) {
+                  clearInterval(checkInterval);
+                  resolve(null);
+                }
+              }, 100);
+            });
+          }
+
           const supabase = await waitForSupabase();
 
           if (!supabase) {
@@ -216,6 +233,7 @@ export const prerender = false
           hideSpinner();
           if (statusText) statusText.textContent = 'Unexpected error';
           showError('An unexpected error occurred: ' + error.message);
+          localStorage.removeItem('auth_callback_running');
           setTimeout(() => { redirectToLogin('Unexpected'); }, 3000);
         }
       })();

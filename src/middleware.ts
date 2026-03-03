@@ -21,19 +21,25 @@ export async function onRequest(context: { request: Request; url: URL }, next: (
     return next()
   }
   
-  // Skip middleware for auth callback page
+  // Skip middleware for auth callback page (CRITICAL)
   if (pathname === '/auth/callback') {
+    console.log('Middleware: Skipping auth/callback')
     return next()
   }
+  
+  console.log('Middleware: Processing board route', pathname)
   
   // Check session and redirect unauthorized users
   const { session, error: sessionError } = await getSession()
   
   if (!session || sessionError) {
+    console.log('Middleware: No session found', { session, sessionError })
     // User not authenticated, redirect to login
     const loginUrl = new URL('/board/login', context.url)
     return Response.redirect(loginUrl)
   }
+  
+  console.log('Middleware: Session exists, checking board membership...')
   
   // Check if user is board member
   const { data: boardMember } = await supabase
@@ -43,12 +49,14 @@ export async function onRequest(context: { request: Request; url: URL }, next: (
     .single()
   
   if (!boardMember) {
+    console.log('Middleware: User not in board_members, signing out')
     // User is authenticated but not a board member
     await supabase.auth.signOut()
     const loginUrl = new URL('/board/login?error=unauthorized', context.url)
     return Response.redirect(loginUrl)
   }
   
+  console.log('Middleware: User is board member, allowing access')
   // User is authenticated and is a board member, proceed
   return next()
 }
