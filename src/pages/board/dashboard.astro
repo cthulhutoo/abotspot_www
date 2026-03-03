@@ -5,7 +5,6 @@ import Layout from '../../layouts/Layout.astro'
 
 const pageTitle = 'Board Dashboard - aBotSpot'
 const pageDescription = 'Grant management dashboard for aBotSpot board members'
-
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -17,52 +16,155 @@ const pageDescription = 'Grant management dashboard for aBotSpot board members'
           <p class="text-gray-600 mt-2">Welcome to aBotSpot Grant Management Portal</p>
       </div>
 
-      <!-- Coming Soon Placeholder -->
-      <div class="bg-white rounded-2xl shadow-lg p-12 text-center">
-        <div class="max-w-md mx-auto">
-          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-6">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 0-6 6 12 12" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m-2 10h-3 10 3" />
-            </svg>
-          </div>
-          
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Grant Portal Coming Soon</h2>
-          
-          <div class="space-y-4">
-            <p class="text-gray-700">
-              The full grant management dashboard is being built and will be available soon.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-              <div class="bg-blue-50 rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-blue-900 mb-2">What's Coming</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                  <li>Grant discovery with smart filtering</li>
-                  <li>Kanban pipeline board</li>
-                  <li>Grant application tracking</li>
-                  <li>Funder intelligence database</li>
-                  <li>Deadline alerts and notifications</li>
-                </ul>
-              </div>
-              
-              <div class="bg-green-50 rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-green-900 mb-2">What's Ready</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                  <li>✅ Supabase database configured</li>
-                  <li>✅ Authentication system working</li>
-                  <li>✅ Board login page created</li>
-                  <li>✅ Route protection enabled</li>
-                </ul>
-              </div>
-            </div>
-            
-            <p class="text-sm text-gray-600 mt-8">
-              Thank you for your patience as we build out the complete grant management system.
-            </p>
-          </div>
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-sm font-semibold text-gray-500 mb-2">Total Grants</h3>
+          <p class="text-3xl font-bold text-gray-900" id="totalGrants">0</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-sm font-semibold text-gray-500 mb-2">New</h3>
+          <p class="text-3xl font-bold text-blue-600" id="newGrants">0</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-sm font-semibold text-gray-500 mb-2">In Review</h3>
+          <p class="text-3xl font-bold text-yellow-600" id="inReviewGrants">0</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-sm font-semibold text-gray-500 mb-2">Approved</h3>
+          <p class="text-3xl font-bold text-green-600" id="approvedGrants">0</p>
         </div>
       </div>
+
+      <!-- Quick Actions -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <a href="/board/discovery" class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+            <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m-2-5a7 7 7 0 0 0 1 0 7-14l-7-7 7 0 0 1-7 7-14l-7-7 7 0 0 1-7 7-14-17z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11v5H9v-8h7v8h4a2 2 0 012 2v8h6a2 2 0 012-2V9m0 0h-2v2h2a2 2 0 012-2v2a2 2 0 012-4V6a2 2 0 00 2v-2H4a2 2 0 00-2V4z" />
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Grant Discovery</h3>
+              <p class="text-sm text-gray-600 mt-1">Search and filter grants</p>
+            </div>
+          </a>
+
+          <a href="/board/pipeline" class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+            <svg class="w-6 h-6 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 2a2 2 0 012-2v9.5A2.5 2.5 0 014 0V17a2.5 2.5 0 002-2V7a2.5 2.5 0 002 2h2a2 2 0 002 2v2.5a2.5 2.5 0 002 0V9.5A2.5 2.5 0 014 0V17z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m-2 10l-3-3a3 3 0 006-3-3a3 3 0 006 0v12a3 3 0 002 2v2a3 3 0 002-2v2.5a3 3 0 002 2v6.5a3 3 0 012 2V12a3 3 0 002-2V9.5A3 3 0 012 0V12z" />
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Grant Pipeline</h3>
+              <p class="text-sm text-gray-600 mt-1">Manage kanban pipeline</p>
+            </div>
+          </a>
+
+          <a href="/board/funders" class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+            <svg class="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0 0-9 4l9-9-9 4 0 014 9 9 9 9 014 9z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19v7h-1a1 1 0 002-2V9a1 1 0 002-2h2a1 1 0 002 2v2.5a1 1 0 002-2V9.5A1 1 0 012 0V12a1 1 0 002-2V9.5A1 1 0 012 0V12z" />
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Funder Intelligence</h3>
+              <p class="text-sm text-gray-600 mt-1">Track funders and deadlines</p>
+            </div>
+          </a>
+
+          <a href="/board/analytics" class="flex items-center p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors">
+            <svg class="w-6 h-6 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 012-2v6a2 2 0 002-2V9a2 2 0 002-2h2a2 2 0 002 2v6.5a2 2 0 002 2V9.5A2.2 2 0 012.2V7a2.2 2 0 002.2V9.5A2.2 2 0 002 2V9.5a2.2 2 0 006.4V7a2.2 2 0 002 2V9.5A2.2 2 0 002 2V9.5a2.2 2 0 006.4V7a2.2 2 0 002 2V9.5a2.2 2 0 006.4V7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 012-2v6a2 2 0 002-2V9a2 2 0 002-2h2a2 2 0 002 2v6.5a2 2 0 002 2V9.5A2.2 2 0 002 2V9.5a2.2 2 0 006.4V7a2.2 2 0 002 2V9.5a2.2 2 0 002 2V9.5a2.2 2 0 006.4V7a2.2 2 0 002 2V9.5a2.2 2 0 006.4V7z" />
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Analytics</h3>
+              <p class="text-sm text-gray-600 mt-1">View grant statistics</p>
+            </div>
+          </a>
+
+          <a href="/board/alerts" class="flex items-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+            <svg class="w-6 h-6 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.41-1.41L10 14.17V7a2 2 0 00-2-2h2a2 2 0 002-2v6a2 2 0 002 2V9a2 2 0 002 2V9.5A2 2 2 0 006.4V7a2.2 2 0 002 2V9.5A2.2 2 0 006.4V7a2.2 2 0 002 2V9.5a2.2 2 0 006.4V7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 6.636L15 17H9V4.5a2.5 2.5 0 014-2.5-2.5-2.5-2.5-2.5 2V9.5A2.5 2.5 0 014-2.5-2.5-2.5-2.5-2.5 2V9.5A2.5 2.5 0 014-2.5V7a2.2 2 0 002 2V9.5A2.2 2 0 006.4V7a2.2 2 0 002 2V9.5a2.2 2 0 002 2V9.5A2.2 2 0 002 2V9.5A2.2 2 0 006.4V7a2.2 2 0 002 2V9.5A2.2 2 0 006.4V7z" />
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Alerts</h3>
+              <p class="text-sm text-gray-600 mt-1">Deadline and notification management</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Coming Soon Banner -->
+      <div class="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-4">Grant Management System 🚀</h2>
+        <p class="text-lg mb-6">
+          The grant management dashboard is now live with authentication and board member access control.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="bg-white/20 rounded-lg p-4">
+            <h3 class="text-lg font-semibold mb-2">✅ Working</h3>
+            <ul class="list-disc list-inside text-left space-y-2 text-sm">
+              <li>Google OAuth authentication</li>
+              <li>Board member access control</li>
+              <li>Session management</li>
+            </ul>
+          </div>
+          <div class="bg-white/20 rounded-lg p-4">
+            <h3 class="text-lg font-semibold mb-2">🚧 In Progress</h3>
+            <ul class="list-disc list-inside text-left space-y-2 text-sm">
+              <li>Grant discovery with real data</li>
+              <li>Kanban pipeline management</li>
+              <li>Funder intelligence tracking</li>
+            </ul>
+          </div>
+        </div>
+        <p class="text-sm opacity-90">
+          Grant Discovery is fully functional. Other features are being built out incrementally.
+          Check back soon for updates!
+        </p>
+      </div>
     </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+      (async function() {
+        const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
+
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Get session
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          console.log('No session found on dashboard');
+          return;
+        }
+
+        // Fetch grant statistics
+        const { data: grants } = await supabase
+          .from('grants')
+          .select('status')
+          .not('is', { count: 'exact', referals: false });
+
+        if (grants) {
+          const total = grants.length;
+          const new = grants.filter(g => g.status === 'New').length;
+          const inReview = grants.filter(g => g.status === 'In Review').length;
+          const approved = grants.filter(g => g.status === 'Approved').length;
+
+          document.getElementById('totalGrants').textContent = total || '0';
+          document.getElementById('newGrants').textContent = new || '0';
+          document.getElementById('inReviewGrants').textContent = inReview || '0';
+          document.getElementById('approvedGrants').textContent = approved || '0';
+        }
+      })();
+    </script>
   </main>
 </Layout>
