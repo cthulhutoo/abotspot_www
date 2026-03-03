@@ -10,78 +10,8 @@ export const prerender = false
 // Get OAuth error from URL (query param)
 const error = Astro.url.searchParams.get('error')
 
-let errorMessage = ''
-let authorized = false
-
-// Check for error in URL
-if (error) {
-  errorMessage = 'Authentication error occurred. Please try again.'
-} else {
-  // Check if we have a hash with access_token
-  const hasHash = Astro.url.hash.length > 1
-
-  if (!hasHash) {
-    errorMessage = 'No authentication data received. Please try again.'
-  } else {
-    // Wait for Supabase to process hash and establish session
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    // Get current session
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-
-    if (sessionError) {
-      const errorMsg = sessionError.message || 'Unknown error'
-      errorMessage = 'Session error: ' + errorMsg
-    } else if (!session) {
-      errorMessage = 'Could not establish session. Please try again.'
-    } else {
-      // Check if user is authorized board member
-      const { data: boardMember, error: memberError } = await supabase
-        .from('board_members')
-        .select('*')
-        .eq('user_id', session.user.id)
-        .single()
-
-      if (memberError) {
-        const errorMsg = memberError.message || 'Unknown error'
-        errorMessage = 'Database error: ' + errorMsg
-      } else if (!boardMember) {
-        // Auto-add anyone with @abotspot.com email as board member
-        const email = session.user.email || ''
-
-        if (email.endsWith('@abotspot.com')) {
-          const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0]
-
-          console.log('Adding board member:', 'userId=' + session.user.id, 'email=' + email, 'name=' + name)
-
-          const { error: insertError } = await supabase
-            .from('board_members')
-            .insert({
-              user_id: session.user.id,
-              name: name,
-              role: 'member'
-            })
-
-          if (insertError) {
-            const errorMsg = insertError.message || 'Unknown error'
-            errorMessage = 'Could not add as board member: ' + errorMsg
-          } else {
-            authorized = true
-            console.log('Board member added successfully')
-          }
-        } else {
-          errorMessage = 'You are not authorized as a board member. @abotspot.com accounts only.'
-          await supabase.auth.signOut()
-        }
-      } else {
-        authorized = true
-        console.log('Existing board member found:', boardMember)
-      }
-    }
-  }
-}
+// Note: All logic is client-side - see script below
 ---
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -94,34 +24,136 @@ if (error) {
   </head>
   <body style="font-family: Inter, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
     <div style="text-align: center; padding: 2rem;">
-      <div id="callback-data" data-authorized={authorized} data-error={errorMessage ? errorMessage : ''} style="display: none;"></div>
-      <div id="status-container" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
         <div style="width: 48px; height: 48px; border: 4px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
         <p style="color: #1f2937; margin: 0;">Processing sign in...</p>
-        {errorMessage && (
-          <div style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem; max-width: 400px; text-align: left;">
-            <p style="color: #991b1b; margin: 0; font-size: 14px; word-wrap: break-word;">{errorMessage}</p>
-          </div>
-        )}
+        <div id="error-display" style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem; max-width: 400px; text-align: left; display: none;">
+          <p style="color: #991b1b; margin: 0; font-size: 14px; word-wrap: break-word;"></p>
+        </div>
       </div>
     </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
-      (function() {
-        var container = document.getElementById('callback-data');
-        var authorized = container.getAttribute('data-authorized') === 'true';
-        var errorMessage = container.getAttribute('data-error');
+      (async function() {
+        const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
 
-        console.log('Auth callback state:', 'authorized=' + authorized, 'errorMessage=' + errorMessage);
+        console.log('OAuth callback page loaded');
 
-        if (authorized) {
+        // Initialize Supabase client
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Check for error in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const oauthError = urlParams.get('error');
+
+        const showError = function(msg) {
+          const errorDisplay = document.getElementById('error-display');
+          const spinner = document.querySelector('div[style*="animation: spin"]');
+          if (spinner) spinner.style.display = 'none';
+          errorDisplay.style.display = 'block';
+          errorDisplay.querySelector('p').textContent = msg;
+        };
+
+        const redirectToDashboard = function() {
+          console.log('Redirecting to dashboard');
           window.location.href = '/board/dashboard';
-        } else if (errorMessage) {
-          window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(errorMessage);
-        } else {
-          window.location.href = '/board/login';
+        };
+
+        const redirectToLogin = function(message) {
+          console.log('Redirecting to login with error:', message);
+          window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(message);
+        };
+
+        if (oauthError) {
+          showError('Authentication error occurred. Please try again.');
+          setTimeout(function() { redirectToLogin(''); }, 3000);
+          return;
         }
+
+        // Check if we have a hash with access_token
+        const hasHash = window.location.hash.length > 1;
+
+        if (!hasHash) {
+          showError('No authentication data received. Please try again.');
+          setTimeout(function() { redirectToLogin(''); }, 3000);
+          return;
+        }
+
+        // Wait for Supabase to process hash and establish session
+        console.log('Waiting for Supabase to process OAuth tokens...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Get current session
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+          showError('Session error: ' + (sessionError.message || JSON.stringify(sessionError)));
+          setTimeout(function() { redirectToLogin(''); }, 3000);
+          return;
+        }
+
+        if (!session) {
+          showError('Could not establish session. Please try again.');
+          setTimeout(function() { redirectToLogin(''); }, 3000);
+          return;
+        }
+
+        console.log('Session established:', session);
+
+        // Check if user is authorized board member
+        const { data: boardMember, error: memberError } = await supabaseClient
+          .from('board_members')
+          .select('*')
+          .eq('user_id', session.user.id)
+          .single();
+
+        if (memberError) {
+          showError('Database error: ' + (memberError.message || JSON.stringify(memberError)));
+          setTimeout(function() { redirectToLogin(''); }, 3000);
+          return;
+        }
+
+        if (!boardMember) {
+          // Auto-add anyone with @abotspot.com email as board member
+          const email = session.user.email || '';
+
+          if (email.endsWith('@abotspot.com')) {
+            const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0];
+
+            console.log('Adding board member:', 'userId=' + session.user.id, 'email=' + email, 'name=' + name);
+
+            const { error: insertError } = await supabaseClient
+              .from('board_members')
+              .insert({
+                user_id: session.user.id,
+                name: name,
+                role: 'member'
+              });
+
+            if (insertError) {
+              showError('Could not add as board member: ' + (insertError.message || JSON.stringify(insertError)));
+              setTimeout(function() { redirectToLogin(''); }, 3000);
+            } else {
+              console.log('Board member added successfully');
+              redirectToDashboard();
+            }
+          } else {
+            showError('You are not authorized as a board member. @abotspot.com accounts only.');
+            await supabaseClient.auth.signOut();
+            setTimeout(function() { redirectToLogin(''); }, 3000);
+          }
+          return;
+        }
+
+        console.log('Existing board member found:', boardMember);
+        redirectToDashboard();
       })();
     </script>
+
     <style>
       @keyframes spin {
         to { transform: rotate(360deg); }
