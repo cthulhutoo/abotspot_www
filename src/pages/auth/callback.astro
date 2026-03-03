@@ -30,7 +30,8 @@ if (error) {
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
     if (sessionError) {
-      errorMessage = `Session error: ${sessionError.message || JSON.stringify(sessionError)}`
+      const errorMsg = sessionError.message || 'Unknown error'
+      errorMessage = 'Session error: ' + errorMsg
     } else if (!session) {
       errorMessage = 'Could not establish session. Please try again.'
     } else {
@@ -42,7 +43,8 @@ if (error) {
         .single()
 
       if (memberError) {
-        errorMessage = `Database error: ${memberError.message || JSON.stringify(memberError)}`
+        const errorMsg = memberError.message || 'Unknown error'
+        errorMessage = 'Database error: ' + errorMsg
       } else if (!boardMember) {
         // Auto-add anyone with @abotspot.com email as board member
         const email = session.user.email || ''
@@ -50,18 +52,19 @@ if (error) {
         if (email.endsWith('@abotspot.com')) {
           const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0]
 
-          console.log('Adding board member:', { userId: session.user.id, email, name })
+          console.log('Adding board member:', 'userId=' + session.user.id, 'email=' + email, 'name=' + name)
 
           const { error: insertError } = await supabase
             .from('board_members')
             .insert({
               user_id: session.user.id,
               name: name,
-              role: 'member'  // Default to member, can be upgraded later
+              role: 'member'
             })
 
           if (insertError) {
-            errorMessage = `Could not add as board member: ${insertError.message || JSON.stringify(insertError)}`
+            const errorMsg = insertError.message || 'Unknown error'
+            errorMessage = 'Could not add as board member: ' + errorMsg
           } else {
             authorized = true
             console.log('Board member added successfully')
@@ -91,33 +94,30 @@ if (error) {
   </head>
   <body style="font-family: Inter, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
     <div style="text-align: center; padding: 2rem;">
-      <script is:inline>
-        const authorized = {authorized ? 'true' : 'false'};
-        const errorMessage = {errorMessage ? JSON.stringify(errorMessage) : 'null'};
-
-        console.log('Auth callback state:', { authorized, errorMessage });
-
-        if (authorized) {
-          // Success - redirect to dashboard
-          window.location.href = '/board/dashboard';
-        } else if (errorMessage) {
-          // Error - redirect to login with error
-          window.location.href = `/board/login?error=callback_error&message=${encodeURIComponent(errorMessage)}`;
-        } else {
-          // Unknown state - redirect to login
-          window.location.href = '/board/login';
-        }
-      </script>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+      <div id="status-container" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
         <div style="width: 48px; height: 48px; border: 4px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
         <p style="color: #1f2937; margin: 0;">Processing sign in...</p>
         {errorMessage && (
-          <div style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem; max-width: 400px;">
-            <p style="color: #991b1b; margin: 0; font-size: 14px;">{errorMessage}</p>
+          <div style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem; max-width: 400px; text-align: left;">
+            <p style="color: #991b1b; margin: 0; font-size: 14px; word-wrap: break-word;">{errorMessage}</p>
           </div>
         )}
       </div>
     </div>
+    <script>
+      const authorized = {authorized ? 'true' : 'false'};
+      const errorMessage = {errorMessage ? '"' + errorMessage + '"' : 'null'};
+
+      console.log('Auth callback state:', 'authorized=' + authorized, 'errorMessage=' + errorMessage);
+
+      if (authorized === 'true') {
+        window.location.href = '/board/dashboard';
+      } else if (errorMessage !== 'null') {
+        window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(errorMessage);
+      } else {
+        window.location.href = '/board/login';
+      }
+    </script>
     <style>
       @keyframes spin {
         to { transform: rotate(360deg); }
