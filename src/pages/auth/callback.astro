@@ -2,13 +2,8 @@
 // OAuth Callback Page - Client Side Handler
 // Handles Supabase implicit OAuth flow (tokens in URL hash)
 
-import { supabase } from '../../lib/supabase'
-
 // Pre-render this route
 export const prerender = false
-
-// Get OAuth error from URL (query param)
-const error = Astro.url.searchParams.get('error')
 
 // Note: All logic is client-side - see script below
 ---
@@ -24,11 +19,11 @@ const error = Astro.url.searchParams.get('error')
   </head>
   <body style="font-family: Inter, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
     <div style="text-align: center; padding: 2rem;">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-        <div style="width: 48px; height: 48px; border: 4px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-        <p style="color: #1f2937; margin: 0;">Processing sign in...</p>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; max-width: 500px;">
+        <div id="spinner" style="width: 48px; height: 48px; border: 4px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p id="status-text" style="color: #1f2937; margin: 0; font-size: 14px;">Initializing...</p>
         <div id="error-display" style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem; max-width: 400px; text-align: left; display: none;">
-          <p style="color: #991b1b; margin: 0; font-size: 14px; word-wrap: break-word;"></p>
+          <p id="error-message" style="color: #991b1b; margin: 0; font-size: 14px; word-wrap: break-word;"></p>
         </div>
       </div>
     </div>
@@ -41,116 +36,161 @@ const error = Astro.url.searchParams.get('error')
         const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
 
-        console.log('OAuth callback page loaded');
+        // DOM elements
+        const spinner = document.getElementById('spinner');
+        const statusText = document.getElementById('status-text');
+        const errorDisplay = document.getElementById('error-display');
+        const errorMessage = document.getElementById('error-message');
 
-        // Initialize Supabase client
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Helper functions
+        const showSpinner = () => {
+          if (spinner) spinner.style.display = 'block';
+          if (statusText) statusText.textContent = 'Processing sign in...';
+        };
 
-        // Check for error in URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const oauthError = urlParams.get('error');
-
-        const showError = function(msg) {
-          const errorDisplay = document.getElementById('error-display');
-          const spinner = document.querySelector('div[style*="animation: spin"]');
+        const hideSpinner = () => {
           if (spinner) spinner.style.display = 'none';
-          errorDisplay.style.display = 'block';
-          errorDisplay.querySelector('p').textContent = msg;
         };
 
-        const redirectToDashboard = function() {
+        const showError = (msg) => {
+          console.error('Error:', msg);
+          hideSpinner();
+          if (statusText) statusText.textContent = 'Error occurred';
+          if (errorDisplay) {
+            errorDisplay.style.display = 'block';
+            if (errorMessage) errorMessage.textContent = msg;
+          }
+        };
+
+        const redirectToLogin = (msg) => {
+          console.log('Redirecting to login with error:', msg);
+          setTimeout(() => {
+            window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(msg);
+          }, 2000);
+        };
+
+        const redirectToDashboard = () => {
           console.log('Redirecting to dashboard');
-          window.location.href = '/board/dashboard';
+          setTimeout(() => {
+            window.location.href = '/board/dashboard';
+          }, 500);
         };
 
-        const redirectToLogin = function(message) {
-          console.log('Redirecting to login with error:', message);
-          window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(message);
-        };
+        try {
+          // Initialize Supabase client
+          console.log('Initializing Supabase client...');
+          const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        if (oauthError) {
-          showError('Authentication error occurred. Please try again.');
-          setTimeout(function() { redirectToLogin(''); }, 3000);
-          return;
-        }
+          // Check for error in URL
+          const urlParams = new URLSearchParams(window.location.search);
+          const oauthError = urlParams.get('error');
 
-        // Check if we have a hash with access_token
-        const hasHash = window.location.hash.length > 1;
+          console.log('URL params:', 'error=' + oauthError);
 
-        if (!hasHash) {
-          showError('No authentication data received. Please try again.');
-          setTimeout(function() { redirectToLogin(''); }, 3000);
-          return;
-        }
+          if (oauthError) {
+            showError('Authentication error occurred. Please try again.');
+            redirectToLogin('OAuth error');
+            return;
+          }
 
-        // Wait for Supabase to process hash and establish session
-        console.log('Waiting for Supabase to process OAuth tokens...');
-        await new Promise(resolve => setTimeout(resolve, 2000));
+          // Check if we have a hash with access_token
+          const hasHash = window.location.hash.length > 1;
 
-        // Get current session
-        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+          if (!hasHash) {
+            showError('No authentication data received. Please try again.');
+            redirectToLogin('No hash');
+            return;
+          }
 
-        if (sessionError) {
-          showError('Session error: ' + (sessionError.message || JSON.stringify(sessionError)));
-          setTimeout(function() { redirectToLogin(''); }, 3000);
-          return;
-        }
+          console.log('Hash detected, waiting for Supabase to process...');
 
-        if (!session) {
-          showError('Could not establish session. Please try again.');
-          setTimeout(function() { redirectToLogin(''); }, 3000);
-          return;
-        }
+          // Wait for Supabase to process hash and establish session
+          showSpinner();
+          statusText.textContent = 'Establishing session...';
+          await new Promise(resolve => setTimeout(resolve, 3000));
 
-        console.log('Session established:', session);
+          console.log('Checking session...');
 
-        // Check if user is authorized board member
-        const { data: boardMember, error: memberError } = await supabaseClient
-          .from('board_members')
-          .select('*')
-          .eq('user_id', session.user.id)
-          .single();
+          // Get current session
+          const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
 
-        if (memberError) {
-          showError('Database error: ' + (memberError.message || JSON.stringify(memberError)));
-          setTimeout(function() { redirectToLogin(''); }, 3000);
-          return;
-        }
+          if (sessionError) {
+            showError('Session error: ' + JSON.stringify(sessionError));
+            redirectToLogin(JSON.stringify(sessionError));
+            return;
+          }
 
-        if (!boardMember) {
-          // Auto-add anyone with @abotspot.com email as board member
-          const email = session.user.email || '';
+          if (!session) {
+            showError('Could not establish session. Session is null.');
+            redirectToLogin('No session');
+            return;
+          }
 
-          if (email.endsWith('@abotspot.com')) {
-            const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0];
+          console.log('Session established:', session);
 
-            console.log('Adding board member:', 'userId=' + session.user.id, 'email=' + email, 'name=' + name);
+          // Check if user is authorized board member
+          statusText.textContent = 'Checking authorization...';
+          const { data: boardMember, error: memberError } = await supabaseClient
+            .from('board_members')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .single();
 
-            const { error: insertError } = await supabaseClient
-              .from('board_members')
-              .insert({
-                user_id: session.user.id,
-                name: name,
-                role: 'member'
-              });
+          if (memberError) {
+            showError('Database error: ' + JSON.stringify(memberError));
+            redirectToLogin(JSON.stringify(memberError));
+            return;
+          }
 
-            if (insertError) {
-              showError('Could not add as board member: ' + (insertError.message || JSON.stringify(insertError)));
-              setTimeout(function() { redirectToLogin(''); }, 3000);
+          if (!boardMember) {
+            // Auto-add anyone with @abotspot.com email as board member
+            const email = session.user.email || '';
+
+            console.log('Board member check:', 'found=' + false, 'email=' + email);
+
+            if (email.endsWith('@abotspot.com')) {
+              const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0];
+
+              console.log('Adding board member:', 'userId=' + session.user.id, 'email=' + email, 'name=' + name);
+
+              statusText.textContent = 'Adding to board members...';
+
+              const { error: insertError } = await supabaseClient
+                .from('board_members')
+                .insert({
+                  user_id: session.user.id,
+                  name: name,
+                  role: 'member'
+                });
+
+              if (insertError) {
+                showError('Could not add as board member: ' + JSON.stringify(insertError));
+                setTimeout(() => {
+                  window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(JSON.stringify(insertError));
+                }, 3000);
+              } else {
+                console.log('Board member added successfully');
+                redirectToDashboard();
+              }
             } else {
-              console.log('Board member added successfully');
-              redirectToDashboard();
+              showError('You are not authorized as a board member. @abotspot.com accounts only.');
+              setTimeout(() => {
+                window.location.href = '/board/login?error=unauthorized';
+              }, 3000);
             }
           } else {
-            showError('You are not authorized as a board member. @abotspot.com accounts only.');
-            await supabaseClient.auth.signOut();
-            setTimeout(function() { redirectToLogin(''); }, 3000);
+            console.log('Existing board member found:', boardMember);
+            redirectToDashboard();
           }
-          return;
+        } catch (error) {
+          console.error('Unexpected error:', error);
+          hideSpinner();
+          if (statusText) statusText.textContent = 'Unexpected error';
+          showError('An unexpected error occurred: ' + error.message);
+          setTimeout(() => {
+            window.location.href = '/board/login?error=callback_error';
+          }, 3000);
         }
-
-        console.log('Existing board member found:', boardMember);
-        redirectToDashboard();
       })();
     </script>
 
