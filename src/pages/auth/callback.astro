@@ -40,8 +40,25 @@ if (error) {
         .single()
 
       if (!boardMember) {
-        errorMessage = 'You are not authorized as a board member.'
-        await supabase.auth.signOut()
+        // Auto-add as chairman if email is ryan@abotspot.com
+        if (session.user.email === 'ryan@abotspot.com') {
+          const { error: insertError } = await supabase
+            .from('board_members')
+            .insert({
+              user_id: session.user.id,
+              name: 'Ryan Clark',
+              role: 'chairman'
+            })
+
+          if (insertError) {
+            errorMessage = `Could not add as board member: ${insertError.message}`
+          } else {
+            authorized = true
+          }
+        } else {
+          errorMessage = 'You are not authorized as a board member.'
+          await supabase.auth.signOut()
+        }
       } else {
         authorized = true
       }
