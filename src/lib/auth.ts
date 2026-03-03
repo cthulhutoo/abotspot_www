@@ -36,10 +36,11 @@ export async function getUser() {
  * Sign in with Google
  */
 export async function signInWithGoogle() {
+  const siteUrl = import.meta.env.SITE_URL || 'https://abotspot.com'
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${import.meta.env.SITE_URL || 'https://abotspot.com'}/board/dashboard`,
+      redirectTo: `${siteUrl}/api/auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
