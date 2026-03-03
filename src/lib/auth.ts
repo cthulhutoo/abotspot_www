@@ -37,11 +37,14 @@ export async function getUser() {
  * Uses implicit OAuth flow (tokens in URL hash, not code)
  */
 export async function signInWithGoogle() {
-  // Use implicit flow - let Supabase redirect back to current URL
-  // Don't specify redirectTo - this allows Google to handle hash tokens
+  const siteUrl = import.meta.env.SITE_URL || 'https://abotspot.com'
+
+  // Explicitly set redirect to /auth/callback
+  // This ensures Google redirects back to our callback page, not front page
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
+      redirectTo: `${siteUrl}/auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
