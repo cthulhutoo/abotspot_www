@@ -1,0 +1,80 @@
+// Client-side Authentication Middleware
+// Runs in browser, handles session checking and redirects
+
+// Pre-render this route
+export const prerender = false
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Auth Check - aBotSpot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+      (async function() {
+        const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
+
+        console.log('Client middleware loaded');
+
+        // Initialize Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Get current path
+        const pathname = window.location.pathname;
+
+        // Board routes that require auth
+        const boardRoutes = ['/board/dashboard', '/board/pipeline', '/board/discovery', '/board/funders', '/board/analytics', '/board/alerts'];
+        const isBoardRoute = boardRoutes.some(route => pathname.startsWith(route));
+
+        // Skip for login and callback
+        if (pathname === '/board/login' || pathname === '/auth/callback') {
+          console.log('Skipping auth check for', pathname);
+          return;
+        }
+
+        // Skip for non-board routes
+        if (!isBoardRoute) {
+          console.log('Not a board route, skipping auth check', pathname);
+          return;
+        }
+
+        console.log('Checking auth for board route:', pathname);
+
+        // Check session
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+        if (sessionError || !session) {
+          console.log('No session found, redirecting to login');
+          window.location.href = '/board/login';
+          return;
+        }
+
+        console.log('Session found:', session.user.email);
+
+        // Check board membership
+        const { data: boardMember } = await supabase
+          .from('board_members')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .single();
+
+        if (!boardMember) {
+          console.log('Not a board member, redirecting to login');
+          await supabase.auth.signOut();
+          window.location.href = '/board/login?error=unauthorized';
+          return;
+        }
+
+        console.log('User is board member, allowing access');
+        // User is authenticated and is a board member, page will load normally
+      })();
+    </script>
+  </body>
+</html>

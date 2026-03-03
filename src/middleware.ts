@@ -1,6 +1,8 @@
 // Authentication Middleware for Board Routes
-import { getSession } from './lib/auth'
-import { supabase } from './lib/supabase'
+// NOTE: Authentication is now client-side only
+// This middleware exists only to add the client-side auth script to all board pages
+
+import type { APIRoute } from 'astro'
 
 // Check if request is for a board-protected route
 function isBoardRoute(pathname: string): boolean {
@@ -11,52 +13,16 @@ function isBoardRoute(pathname: string): boolean {
 export async function onRequest(context: { request: Request; url: URL }, next: () => Promise<Response>) {
   const { pathname } = new URL(context.request.url)
   
-  // Skip middleware for non-board routes
+  // Only add auth script to board routes
   if (!isBoardRoute(pathname)) {
     return next()
   }
   
-  // Skip middleware for login page itself
-  if (pathname === '/board/login') {
+  // Skip for login and callback (they have their own logic)
+  if (pathname === '/board/login' || pathname === '/auth/callback') {
     return next()
   }
   
-  // Skip middleware for auth callback page (CRITICAL)
-  if (pathname === '/auth/callback') {
-    console.log('Middleware: Skipping auth/callback')
-    return next()
-  }
-  
-  console.log('Middleware: Processing board route', pathname)
-  
-  // Check session and redirect unauthorized users
-  const { session, error: sessionError } = await getSession()
-  
-  if (!session || sessionError) {
-    console.log('Middleware: No session found', { session, sessionError })
-    // User not authenticated, redirect to login
-    const loginUrl = new URL('/board/login', context.url)
-    return Response.redirect(loginUrl)
-  }
-  
-  console.log('Middleware: Session exists, checking board membership...')
-  
-  // Check if user is board member
-  const { data: boardMember } = await supabase
-    .from('board_members')
-    .select('id')
-    .eq('user_id', session.user.id)
-    .single()
-  
-  if (!boardMember) {
-    console.log('Middleware: User not in board_members, signing out')
-    // User is authenticated but not a board member
-    await supabase.auth.signOut()
-    const loginUrl = new URL('/board/login?error=unauthorized', context.url)
-    return Response.redirect(loginUrl)
-  }
-  
-  console.log('Middleware: User is board member, allowing access')
-  // User is authenticated and is a board member, proceed
+  // Return the page with auth script injected
   return next()
 }
