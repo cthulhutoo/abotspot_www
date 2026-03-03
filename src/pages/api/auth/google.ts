@@ -6,10 +6,9 @@ export const GET: APIRoute = async ({ redirect }) => {
 
   if (error) {
     console.error('OAuth sign-in error:', error)
-    return new Response(JSON.stringify({ error: 'Failed to initiate sign-in' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    // Redirect to login page with error instead of returning JSON
+    // Returning JSON causes browser to download file instead of navigating
+    return redirect('/board/login?error=oauth_error')
   }
 
   // Redirect to Google OAuth URL
