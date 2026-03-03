@@ -5,7 +5,7 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://abotspot.com',
-  output: 'server',
+  output: 'hybrid',
   integrations: [tailwind()],
   adapter: vercel(),
   compressHTML: true,

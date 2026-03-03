@@ -1,6 +1,9 @@
 import type { APIRoute } from 'astro'
 import { supabase } from '../../../lib/supabase'
 
+// Pre-render this route as false to make it server-side only
+export const prerender = false
+
 export const GET: APIRoute = async ({ url, redirect }) => {
   // Get access token and refresh token from URL
   const code = url.searchParams.get('code')

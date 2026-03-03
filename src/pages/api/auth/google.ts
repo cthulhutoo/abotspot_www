@@ -1,6 +1,9 @@
 import type { APIRoute } from 'astro'
 import { signInWithGoogle } from '../../../lib/auth'
 
+// Pre-render this route as false to make it server-side only
+export const prerender = false
+
 export const GET: APIRoute = async ({ redirect }) => {
   const { data, error } = await signInWithGoogle()
 
