@@ -28,40 +28,15 @@ export const prerender = false
       </div>
     </div>
 
-    <!-- Supabase JS Client - using v2 which has createClient -->
+    <!-- Supabase JS Client - try v2 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
       (async function() {
-        // Wait for Supabase to load
-        function waitForSupabase() {
-          return new Promise((resolve) => {
-            const checkInterval = setInterval(() => {
-              if (window.supabase && window.supabase.createClient) {
-                clearInterval(checkInterval);
-                resolve(window.supabase);
-              }
-            }, 100);
+        const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
 
-            // Timeout after 10 seconds
-            setTimeout(() => {
-              clearInterval(checkInterval);
-              resolve(null);
-            }, 10000);
-          });
-        }
-
-        const supabase = await waitForSupabase();
-
-        if (!supabase) {
-          document.getElementById('status-text').textContent = 'Error: Supabase failed to load';
-          document.getElementById('error-message').textContent = 'Please refresh the page and try again.';
-          document.getElementById('spinner').style.display = 'none';
-          document.getElementById('error-display').style.display = 'block';
-          return;
-        }
-
-        console.log('Supabase loaded successfully');
+        console.log('OAuth callback page loaded');
 
         // DOM elements
         const spinner = document.getElementById('spinner');
@@ -88,10 +63,10 @@ export const prerender = false
           }
         };
 
-        const redirectToLogin = (msg) => {
-          console.log('Redirecting to login with error:', msg);
+        const redirectToLogin = (message) => {
+          console.log('Redirecting to login with error:', message);
           setTimeout(() => {
-            window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(msg);
+            window.location.href = '/board/login?error=callback_error&message=' + encodeURIComponent(message);
           }, 2000);
         };
 
@@ -102,17 +77,39 @@ export const prerender = false
           }, 500);
         };
 
+        // Wait for Supabase to load - up to 30 seconds
+        function waitForSupabase() {
+          return new Promise((resolve) => {
+            const startTime = Date.now();
+            const timeout = 30000; // 30 seconds
+
+            const checkInterval = setInterval(() => {
+              if (window.supabase && window.supabase.createClient) {
+                clearInterval(checkInterval);
+                resolve(window.supabase);
+              }
+
+              if (Date.now() - startTime > timeout) {
+                clearInterval(checkInterval);
+                resolve(null);
+              }
+            }, 100);
+          });
+        }
+
         try {
-          // Configuration
-          const SUPABASE_URL = 'https://myqyqdiaoojoglxjwtnu.supabase.co';
-          const SUPABASE_ANON_KEY = 'sb_publishable_Y4iHbWeFUm0Jj2xQls48fg_7dKmt99Q';
+          const supabase = await waitForSupabase();
 
-          console.log('Initializing Supabase client...');
+          if (!supabase) {
+            document.getElementById('status-text').textContent = 'Loading Supabase failed. Retrying...';
+            setTimeout(() => {
+              // Retry by reloading page
+              window.location.reload();
+            }, 2000);
+            return;
+          }
 
-          // Initialize Supabase client
-          const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-          console.log('Supabase client initialized');
+          console.log('Supabase loaded successfully');
 
           // Check for error in URL
           const urlParams = new URLSearchParams(window.location.search);
@@ -136,15 +133,14 @@ export const prerender = false
           }
 
           // Wait for Supabase to process hash and establish session
-          console.log('Hash detected, waiting for Supabase to process OAuth tokens...');
           showSpinner();
           statusText.textContent = 'Establishing session...';
-          await new Promise(resolve => setTimeout(resolve, 2500));
+          await new Promise(resolve => setTimeout(resolve, 3000));
 
           console.log('Checking session...');
 
           // Get current session
-          const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+          const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
           if (sessionError) {
             const errorMsg = sessionError.message || JSON.stringify(sessionError);
@@ -163,7 +159,7 @@ export const prerender = false
 
           // Check if user is authorized board member
           statusText.textContent = 'Checking authorization...';
-          const { data: boardMember, error: memberError } = await supabaseClient
+          const { data: boardMember, error: memberError } = await supabase
             .from('board_members')
             .select('*')
             .eq('user_id', session.user.id)
@@ -189,7 +185,7 @@ export const prerender = false
 
               statusText.textContent = 'Adding to board members...';
 
-              const { error: insertError } = await supabaseClient
+              const { error: insertError } = await supabase
                 .from('board_members')
                 .insert({
                   user_id: session.user.id,
@@ -207,13 +203,14 @@ export const prerender = false
               }
             } else {
               showError('You are not authorized as a board member. @abotspot.com accounts only.');
-              await supabaseClient.auth.signOut();
+              await supabase.auth.signOut();
               setTimeout(() => { redirectToLogin('Not authorized'); }, 3000);
             }
-          } else {
-            console.log('Existing board member found:', boardMember);
-            redirectToDashboard();
+            return;
           }
+
+          console.log('Existing board member found:', boardMember);
+          redirectToDashboard();
         } catch (error) {
           console.error('Unexpected error:', error);
           hideSpinner();
